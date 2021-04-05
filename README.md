@@ -8,5 +8,11 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
 ## Course Content:
  - Introduction to cluster systems
  - Kubernetes architecture
+ - First kubectl commands
+ - Core concepts
+ - Application Lifecycle Management
+ - Storage
+ - Observability: Logging|Monitoring|Tracing
+ - Design a Kubernetes Cluster
  
  
