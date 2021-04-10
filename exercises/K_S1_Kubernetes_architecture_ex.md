@@ -13,9 +13,13 @@
 ### Question 3
  - Which is the main cli tool to manager the kubernetes cluster ?
  - Where can be installed?
+ - Which command is used to list the kubernetes nodes ?
 
 ### Question 4
  - Which are the main Kubernetes deployment objects?
+
+### Question 5
+ - What a kubernetes `namespace` and how can be used (describe use case examples)?  
 
 ---
 ## Quiz Solution
@@ -32,11 +36,32 @@
  - However, a best practice is not to deploy application workloads on a master nodes 
 
 ### Question 3
- - Which is the main cli tool to manager the kubernetes cluster ?
- - Where can be installed?
- - The main cli tool to manage the kubernetes cluster is `kubectl`
- - The `kubectl` tool is usually installed our pc/laptop systems, but can be also installed on the master nodes 
+ - Which is the main cli tool to manager the kubernetes cluster ?  
+ 💡 The main cli tool to manage the kubernetes cluster is `kubectl`
+
+ - Where can be installed?  
+ 💡 The `kubectl` tool is usually installed our pc/laptop systems, but can be also installed on the master nodes 
+
+ - Which command is used to list the kubernetes nodes ?  
+ 💡 `kubectl get nodes` 
 
 ### Question 4
  - Which are the main Kubernetes deployment objects?
- - TODO 
+
+<details>
+  <summary>answer</summary>
+  
+ 1. ### `Pod` -> The smallest deployable unit
+ 1. ### `ReplicaSet` -> Used to provide self-healing and scaling
+ 1. ### `Deployment` -> Used to provide zero-downtime rolling-updates
+ 1. ### `Service`    -> Provide stable reliable networking for Pods (cannot relay on Pod IP)
+ 1. ### `Namespace`  -> logically divide the cluster in multiple virtual clusters
+</details> 
+ 
+### Question 5
+ - What a kubernetes `namespace` and how can be used (describe use case examples)?  
+ - It is used to logically divide the cluster in multiple virtual clusters
+ - Example: we can have namespace for the `prod` environment and one for the `test` environment
+ - Example: we can have a namespace to separate independent application stacks
+ - `kube-system` namespace is used for the control plane applications
+ - `default` namespace is used for our workloads 

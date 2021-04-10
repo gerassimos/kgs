@@ -99,11 +99,6 @@ gm-123   Ready    <none>                 53d   v1.20.2
  - pod do not support easy updates and rollbacks (undo the update) 
 
 --- 
-## Multi-container Pod 
- - We can have more that one container in Pod
- - Containers deployed in a Pod are always co-located 
- - They share the same network stack and volumes
-<img Multi-container Pod sharing the same network stack and volumes> 
 
 ## ReplicaSet - self-healing and scalability
  - If a Pod managed be a ReplicaSet fails, it will be replaced **(self-healing)**
@@ -117,13 +112,28 @@ gm-123   Ready    <none>                 53d   v1.20.2
  - It important to understand that a single Deployment object can only manage a **single** Pod template  
 ---
 
+## Multi-container Pod 
+ - We can have more that one container in Pod
+ - Containers deployed in a Pod are always co-located 
+ - They share the same network stack and volumes
+<img Multi-container Pod sharing the same network stack and volumes> 
+
 ## Namespace
- - logically divide the cluster in multiple virtual clusters
+ - It is used to logically divide the cluster in multiple virtual clusters
  - Example: we can have namespace for the `prod` environment and one for the `test` environment
  - Example: we can have a namespace to separate independent application stacks
  - `kube-system` namespace is used for the control plane applications
  - `default` namespace is used for our workloads
- - Not All Objects are in a Namespace
+
+ > Note:  
+ > Not All kubernetes objects are in a `namespace`
+
+## Installation options
+ - ### Docker Desktop (Enable Kubernetes)
+ - ### Minikube (--driver=virtualbox)
+ - ### MicroK8s (Canonical - Ubuntu)
+ - ### Play with kubernetes (online web based)
+ - ### Katacoda (online web based)
 
 
 
