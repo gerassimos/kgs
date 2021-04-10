@@ -118,7 +118,12 @@ gm-123   Ready    <none>                 53d   v1.20.2
 ---
 
 ## Namespace
-TODO ??
+ - logically divide the cluster in multiple virtual clusters
+ - Example: we can have namespace for the `prod` environment and one for the `test` environment
+ - Example: we can have a namespace to separate independent application stacks
+ - `kube-system` namespace is used for the control plane applications
+ - `default` namespace is used for our workloads
+ - Not All Objects are in a Namespace
 
 
 
