@@ -9,6 +9,11 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
  - Introduction to cluster systems
  - Kubernetes architecture
  - First kubectl commands
+   - Create a Pod
+   - Create a Deployment
+   - Deployment self-healing and scalability
+   - Create a pod with yml file
+   - Imperative vs Declarative approach
  - Core concepts
  - Application Lifecycle Management
  - Storage

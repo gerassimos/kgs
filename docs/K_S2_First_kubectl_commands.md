@@ -55,7 +55,7 @@ root@nginx:/# exit
 # 
 ```
 > Note 
-> The `-it` option is used to create a terminal and attache it to the pod
+> The `-it` option is used to create a terminal and attache it to the pod.
 > We are inside the container now, we need to type `exit` to return to the node terminal
 
 ```console
@@ -79,30 +79,219 @@ pod "nginx" deleted
 ```
 
 ## Common commands (deployment)
- - ### `kubectl create deployment nginx-deploy --image=nginx` - 
- - ### `kubectl get all` - 
- - ### `kubectl delete pod nginx-deploy-d4789f999-rs9vf ` - 
- - ### `kubectl get all` -  
- - ### `kubectl scale deployment nginx-deploy --replicas=2` - 
- - `kubectl scale deploy nginx-deploy --replicas=3` - use deploy instead of deployment
- - `kubectl scale deploy/nginx-deploy --replicas=3` - use "/" instead of a space
- - kubectl logs deployment/nginx-deploy => only one pod
- - kubectl get pod --show-labels 
- - kubectl logs --selector app=nginx-deploy => up to 5 pods
- - kubectl logs -l app=nginx-deploy 
- - In production we need a 3rd party monitoring system like `prometheus`
- - `kubectl delete deployment nginx-deploy` 
-
-kubectl create deployment nginx-deploy --image=nginx
-
-...
-multiple ways to execute a command
-
-Resource types and their abbreviated aliases
-...
-https://kubernetes.io/docs/reference/kubectl/overview/#resource-types
+ - ### `kubectl create deployment`  
+ - ### `kubectl get all` - list all resources in the current (default) namespace
+ - ### `kubectl scale deployment` - Scaling a Deployment 
+ - ### `kubectl delete deployment nginx-deploy` 
 
 ---
 
-## kubernetes imperative vs declarative
-TODO
+## kubectl create deployment
+### `kubectl create deployment <deployment-name> --image=<docker-image>`
+```console
+# kubectl create deployment nginx-deploy --image=nginx
+deployment.apps/nginx-deploy created
+```
+---
+## `kubectl get all` - list all resources in a namespace
+### `$ kubectl get all --namespace=<namespace-name>`
+
+```console
+$ kubectl get all
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/nginx-deploy-d4789f999-vgmw4   1/1     Running   0          3m26s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   11m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deploy   1/1     1            1           3m26s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deploy-d4789f999   1         1         1       3m26s
+```
+
+> Notes:  
+> From the output of the above command we can see the layers of a Deployment object (Deployment->ReplicaSet->Pod)
+> If we omit the `--namespace` option then the **default** namespace is used  
+> The **kubernetes** service in the default namespace is a service which forwards requests to the Kubernetes-api server. 
+> So all the requests to the **kubernetes.default** dns-name will be routed to the Kubernetes-api server
+---
+
+## Delete the pod that is part of Deployment (self-healing)
+ - If we try to Delete a Pod which is part of Deployment then a new Pod is created (**self-healing**).
+```console
+# kubectl delete pod nginx-deploy-d4789f999-vgmw4
+pod "nginx-deploy-d4789f999-vgmw4" deleted
+
+# kubectl get all
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/nginx-deploy-d4789f999-t7r2c   1/1     Running   0          27s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   62m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deploy   1/1     1            1           53m
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deploy-d4789f999   1         1         1       53m
+```
+---
+
+## Scaling a Deployment
+### `kubectl scale  deployment <deployment-name> --replicas=<number-of-replicas>`
+
+```console
+# kubectl scale  deployment nginx-deploy --replicas=2
+deployment.apps/nginx-deploy scaled
+```
+
+ - Use deploy instead of deployment
+```console
+# kubectl scale  deployment nginx-deploy --replicas=2
+deployment.apps/nginx-deploy scaled
+```
+
+ - Use "/" instead of a space
+```console
+# kubectl scale deploy/nginx-deploy --replicas=3
+deployment.apps/nginx-deploy scaled
+```
+
+> Notes:
+> There are multiple ways to execute the same command.
+> There are multiple ways to create objects and perform any kind of administrative action on kubernetes 
+
+ - Resource types and their abbreviated aliases - [Resource Types](https://kubernetes.io/docs/reference/kubectl/overview/#resource-types)
+
+---
+
+## Deployment logs 
+ - To see the deployment logs:
+```console
+# kubectl logs deployment/nginx-deploy
+Found 3 pods, using pod/nginx-deploy-d4789f999-x6vxb
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+``` 
+
+> This will only display logs from one pod 
+
+---
+## Deployment logs - label selector
+ - Use the `kubectl get pod --show-labels` command to display pod labels
+```console
+$ kubectl get pod --show-labels
+NAME                           READY   STATUS    RESTARTS   AGE     LABELS
+nginx-deploy-d4789f999-jwq4v   1/1     Running   0          8m22s   app=nginx-deploy
+nginx-deploy-d4789f999-jzkfp   1/1     Running   0          21m     app=nginx-deploy
+nginx-deploy-d4789f999-x6vxb   1/1     Running   0          24m     app=nginx-deploy
+```
+ - Use the `kubectl logs -l app=nginx-deploy` command to display logs from all Pods that are part of the Deployment 
+ - This command is using the **label selector** `-l app=nginx-deploy` to filter the set of pods and apply the logs command 
+```console
+$ kubectl logs -l app=nginx-deploy
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+...
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+...
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+``` 
+
+> Usually in production we use 3rd party logging solutions such as the **ELK Stack** (Elasticsearch, Logstash, and Kibana) 
+---
+
+## Delete the deployment
+ - Use the `kubectl delete deployments <deployment-name>` to delete the deployment
+```console
+# kubectl delete deployments nginx-deploy 
+deployment.apps "nginx-deploy" deleted
+```
+ - Display the available resources in the *default* namespaces:
+```
+# kubectl get all
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   53m
+```
+
+---
+
+## Create a pod with yml file - pod.yml
+ - Following is the content of the `pod.yml` file used for this example
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nginx
+spec:
+  containers:
+  - image: nginx
+    name: container-nginx
+```
+
+> Note:  
+> Both `.yml` and `.yaml` are valid extensions for the file
+---
+
+## Create a pod with yml file - kubectl create -f
+### `kubectl create -f <file.yml>`  
+```console
+# kubectl create -f pod.yml 
+pod/pod-nginx created
+
+# kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+pod-nginx   1/1     Running   0          9s
+
+# kubectl create -f pod.yml 
+Error from server (AlreadyExists): error when creating "pod.yml": pods "pod-nginx" already exists
+
+# kubectl delete pod pod-nginx 
+pod "pod-nginx" deleted
+```
+
+> The second time that we execute the `kubectl create` command fails  
+
+---
+
+
+## Create a pod with yml file - kubectl create -f
+
+```console
+# kubectl apply -f pod.yml 
+pod/pod-nginx created
+
+# kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+pod-nginx   1/1     Running   0          7s
+
+# kubectl apply -f pod.yml 
+pod/pod-nginx unchanged
+
+# kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+pod-nginx   1/1     Running   0          18s
+# 
+```
+
+> The second time that we execute the `kubectl apply` command succeed but nothing is changed in the cluster
+> This is the `declarative` way of deploying a pod
+
+---
+
+## kubernetes Imperative vs Declarative
+ - There are two basic ways to deploy to Kubernetes: 
+ - **imperatively**: by using commands such as `kubectl run` or `kubectl create` etc..
+ - **declaratively**: by writing the manifest yaml files and using `kubectl apply`. 
+
+### With the `declarative` way 
+ - if an object **does not exist** then is created
+ - if an object **does exist** then is updated or remains unchanged
+
+> Most of the times we use the `declarative` approach.  
+> The yaml manifest files are treaded as code  
+> which means that are stored in version control system such as GitHub
