@@ -31,7 +31,55 @@ nginx   1/1     Running   0          6m42s
 ### `kubectl describe <resource-type> <resource-name>`
 ```console
 # kubectl describe pod nginx
-TODO
+Name:         nginx
+Namespace:    default
+Priority:     0
+Node:         node01/172.17.0.36
+Start Time:   Sat, 10 Apr 2021 16:35:09 +0000
+Labels:       run=nginx
+Annotations:  <none>
+Status:       Running
+IP:           10.244.1.3
+IPs:
+  IP:  10.244.1.3
+Containers:
+  nginx:
+    Container ID:   docker://9a3f5f0fa4331838c93390a75413c0ad140138a0a7b9f047920e68a197f0ef51
+    Image:          nginx
+    Image ID:       docker-pullable://nginx@sha256:6b5f5eec0ac03442f3b186d552ce895dce2a54be6cb834358040404a242fd476
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Sat, 10 Apr 2021 16:35:18 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-j5czv (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-j5czv:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-j5czv
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  10m   default-scheduler  Successfully assigned default/nginx to node01
+  Normal  Pulling    10m   kubelet, node01    Pulling image "nginx"
+  Normal  Pulled     10m   kubelet, node01    Successfully pulled image "nginx"
+  Normal  Created    10m   kubelet, node01    Created container nginx
+  Normal  Started    10m   kubelet, node01    Started container nginx
+  
 ```
 > Note
 > See info about Namespace, Node, **Labels** etc..
@@ -40,8 +88,15 @@ TODO
 ## kubectl logs - display logs
 ### `kubectl logs <pod-name> [container-name]`
 ```console
-# kubectl logs nginx
-TODO
+# kubectl logs nginx nginx
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+...
+
+# kubectl logs nginx 
+...
 ```
 
 ---
