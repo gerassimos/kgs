@@ -8,8 +8,8 @@
  - If the kubernetes namespace is not specified then it is assumed to be the **default** namespace
 
 ### Exercise 1 - Pod lifecycle
- - Create a new pod with the nginx Docker image.
- - Verify the number of pods available in the default namespace ?
+ - Create a new **Pod** with the nginx Docker image.
+ - Verify the number of pods available in the default namespace.
  - What is the STATUS and the READY state of the Pod ?
  - What is the meaning of `1/1` in the READY state column ?
  - Verify the detailed (describe) information of the pod.
@@ -17,21 +17,27 @@
  - Which is the IP address of the pod?
  - Which are the labels of the Pod?
  - Describe the Container(s) created. 
- - Which is the name of the container that is created from the Pod. (Note that this is automatically crated from the kubernetes cluster)
+ - Which is the name of the container that is created from the Pod.
  - Describe the **Conditions** and the **Events** of the Pod.
  - Display the logs of the pod
  - From the master node of the cluster use the `curl` command and the IP address of the Pod to retrieve the index.html page of the nginx webserver
  - Display the content of the file `/run/secrets/kubernetes.io/serviceaccount/token` which is located in the nginx pod
-`kubectl exec nginx -- cat /run/secrets/kubernetes.io/serviceaccount/token`
-Note in case there is more than one container in the pod then the syntax of this command is 
-`kubectl exec <pod-name> <container-name> -- <cmd>`
  - Delete the Pod
 
-### Exercise 2 - Deployment
+### Exercise 2 - Deployment lifecycle
+ - Create a new **Deployment** with the nginx Docker image.
+ - List all resources in the *default* namespace.
+ - Describe all the resources that are part of the Deployment.
+ - Scale the **Deployment** up to 5 replicas 
+ - Display all the Pods in the *default* namespace and the related labels.
+ - Display the logs of all the Pods that are part of the Deployment.
+ - Delete the **Deployment**
 
 ### Exercise 3 - Create a pod with yml file - The Declarative way 
-create a yml ???
-use the yml file deployment.yml available at ... to deploy 
+ - Create a new **Pod** with the **redis** Docker image by using the Declarative way. The name of the Pod should be *redis-pod* and the name of the container should be *redis-container*
+ - List the *redis-pod* pod in the *default* namespace. 
+ - Display the logs of the **redis-container**
+
 
 ---
 
@@ -103,7 +109,7 @@ IP:           10.244.1.3
 ```console
  # kubectl get pods -o wide
 NAME    READY   STATUS    RESTARTS   AGE   IP           NODE  
-nginx   1/1     Running   0          20s   10.244.1.4   node01
+nginx   1/1     Running   0          20s   10.244.1.3   node01
 ```
  - Which are the labels of the Pod?
 ```console
@@ -173,7 +179,17 @@ Events:
 
  - From the master node of the cluster use the `curl` command and the IP address of the Pod to retrieve the index.html page of the nginx webserver
 
-TODO
+```console
+# curl 10.244.1.3
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+</html>
+```
+
+> The Pod is accessible from any node of the cluster via the POD's IP address  
+
 
  - Display the content of the file `/run/secrets/kubernetes.io/serviceaccount/token` which is located in the nginx pod
 ```console 
@@ -190,3 +206,110 @@ pod "nginx" deleted
 ```
 
 ---
+
+### Exercise 2 - Deployment lifecycle
+ - Create a new **Deployment** with the nginx Docker image.
+```console
+# kubectl create deployment nginx-deploy --image=nginx
+deployment.apps/nginx-deploy created
+```   
+
+ - List all resources in the *default* namespace.
+```console
+$ kubectl get all 
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/nginx-deploy-d4789f999-7t29b   1/1     Running   0          32s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   47m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deploy   1/1     1            1           32s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deploy-d4789f999   1         1         1       32s
+```
+
+ - Describe all the resources that are part of the Deployment.
+> Deployment -> nginx-deploy 
+> ReplicaSet -> nginx-deploy-d4789f999
+> Pod        -> nginx-deploy-d4789f999-7t29b
+
+ - Scale the **Deployment** up to 5 replicas 
+```console
+$ kubectl scale deployment --replicas=5 nginx-deploy 
+deployment.apps/nginx-deploy scaled
+``` 
+  
+ - Display all the Pods in the *default* namespace and the related labels.
+```console
+$ kubectl get pods --show-labels 
+NAME                           READY   STATUS    RESTARTS   AGE     LABELS
+nginx-deploy-d4789f999-7t29b   1/1     Running   0          2m24s   app=nginx-deploy
+nginx-deploy-d4789f999-f6pk5   1/1     Running   0          34s     app=nginx-deploy
+nginx-deploy-d4789f999-kjhnb   1/1     Running   0          34s     app=nginx-deploy
+nginx-deploy-d4789f999-nmj5v   1/1     Running   0          34s     app=nginx-deploy
+nginx-deploy-d4789f999-z2gf9   1/1     Running   0          34s     app=nginx-deploy
+```
+  
+ - Display the logs of all the Pods that are part of the Deployment.
+```
+# kubectl logs -l app=nginx-deploy
+...
+/docker-entrypoint.sh: Configuration complete; ready for start up
+...
+/docker-entrypoint.sh: Configuration complete; ready for start up
+...
+/docker-entrypoint.sh: Configuration complete; ready for start up
+...
+/docker-entrypoint.sh: Configuration complete; ready for start up
+...
+/docker-entrypoint.sh: Configuration complete; ready for start up
+```
+> Logs from all 5 Pods is displayed in the output 
+
+ - Delete the **Deployment**
+```console
+$ kubectl delete deployment nginx-deploy 
+deployment.apps "nginx-deploy" deleted
+```  
+
+---
+
+### Exercise 3 - Create a pod with yml file - The Declarative way 
+ - Create a new **Pod** with the redis Docker image by using the Declarative way. The name of the Pod should be *redis-pod* and the name of the container should be *redis-container*
+
+   - Create the pod.yml: 
+```yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-pod
+spec:
+  containers:
+  - image: redis
+    name: redis-container
+```
+   - Create the pod by executing the `kubectl apply -f pod.yml` command
+```console
+# ls -1
+pod.yml
+
+# kubectl apply -f pod.yml 
+pod/redis-pod created
+```
+
+ - List the *redis-pod* pod in the *default* namespace. 
+```console
+# kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+redis-pod   1/1     Running   0          9s
+```
+  
+
+ - Display the logs of the **redis-container**
+```
+$ kubectl logs redis-pod redis-container 
+...
+1:M 19 Apr 2021 19:52:20.036 * Ready to accept connections
+``` 
