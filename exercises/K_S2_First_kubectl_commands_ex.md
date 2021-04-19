@@ -301,11 +301,13 @@ pod/redis-pod created
 
  - List the *redis-pod* pod in the *default* namespace. 
 ```console
-# kubectl get pods
+# kubectl get pods redis-pod
 NAME        READY   STATUS    RESTARTS   AGE
 redis-pod   1/1     Running   0          9s
-```
-  
+```  
+
+> We can optionally specify the name(s) of the pod(s) to list
+
 
  - Display the logs of the **redis-container**
 ```
