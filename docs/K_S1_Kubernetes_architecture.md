@@ -79,54 +79,7 @@ gm-123   Ready    <none>                 53d   v1.20.2
 ![img_width_100](images/K_S1_k8s_CRI_CNI_CSI.jpg)
 ---
 
-## Basic Deployment objects
-### `Pod` -> The smallest deployable unit
-### `ReplicaSet` -> Used to provide self-healing and scaling
-### `Deployment` -> Used to provide zero-downtime rolling-updates
-### `Service`    -> Provide stable reliable networking for Pods (cannot relay on Pod IP)
-### `Namespace`  -> logically divide the cluster in multiple virtual clusters
----
 
-## Basic Deployment objects - Deployment 
- - <img box Deployment in box ReplicaSet in Box Pod>
- - A pod is managed by a ReplicaSet which is managed by a Deployment
----
-
-## Pod 
- - Pod is the smallest deployable unit
- - At high level a container is wrapped in a Pod so it can run on kubernetes
- - pod do not serf-heal and the do not scale
- - pod do not support easy updates and rollbacks (undo the update) 
-
---- 
-
-## ReplicaSet - self-healing and scalability
- - If a Pod managed be a ReplicaSet fails, it will be replaced **(self-healing)**
- - We can easily increase or decrease the number of Pods **(scaling)** 
- - It is common not to create ReplicaSet directly but use Deployment to manage the ReplicaSet
----
-
-## Deployment
- - Used to provide zero-downtime rolling-updates
- - Every time that we create a Deployment we automatically get a ReplicaSet that manages the Deployment's Pods
- - It important to understand that a single Deployment object can only manage a **single** Pod template  
----
-
-## Multi-container Pod 
- - We can have more that one container in Pod
- - Containers deployed in a Pod are always co-located 
- - They share the same network stack and volumes
-<img Multi-container Pod sharing the same network stack and volumes> 
-
-## Namespace
- - It is used to logically divide the cluster in multiple virtual clusters
- - For example we can have namespace for the `prod` environment and one for the `test` environment
- - For example we can have a namespace to separate independent application stacks
- - `kube-system` namespace is used for the control plane applications
- - `default` namespace is used for our workloads
-
- > Note:  
- > Not All kubernetes objects are in a `namespace`
 
 ## Installation options
  - ### Docker Desktop (Enable Kubernetes)

@@ -19,7 +19,7 @@
  - Which are the main Kubernetes deployment objects?
 
 ### Question 5
- - What a kubernetes `namespace` and how can be used (describe use case examples)?  
+ - What is a kubernetes `namespace` and how can be used (describe use case examples)?  
 
 ---
 ## Quiz Solution
@@ -57,9 +57,10 @@
  1. ### `Service`    -> Provide stable reliable networking for Pods (cannot relay on Pod IP)
  1. ### `Namespace`  -> logically divide the cluster in multiple virtual clusters
 </details> 
+
  
 ### Question 5
- - What a kubernetes `namespace` and how can be used (describe use case examples)?  
+ - What is a kubernetes `namespace` and how can be used (describe use case examples)?  
  - It is used to logically divide the cluster in multiple virtual clusters
  - Example: we can have namespace for the `prod` environment and one for the `test` environment
  - Example: we can have a namespace to separate independent application stacks

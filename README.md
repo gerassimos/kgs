@@ -8,6 +8,7 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
 ## Course Content:
  - Introduction to cluster systems
  - Kubernetes architecture
+ - Basic Deployment objects
  - First kubectl commands
    - Create a Pod
    - Create a Deployment
