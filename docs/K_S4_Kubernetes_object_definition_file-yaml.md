@@ -135,7 +135,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-rs
+  name: nginx-deploy
 spec:
   replicas:
   selector:
@@ -199,3 +199,87 @@ deployment.apps/nginx-deploy   1/1     1            1           2m19s
 NAME                                      DESIRED   CURRENT   READY   AGE
 replicaset.apps/nginx-deploy-7d9b76dbf7   1         1         1       2m19s
 ```
+
+## Generate a Kubernetes object definition file
+ - We can generate a Kubernetes object definition file by using the: `--dry-run=client -o yaml`
+ - We use the `--dry-run=client` option to preview the object that we would like to create
+ - With the `--dry-run=client` option we do not actually send the request to the cluster
+ - We use the `-o yaml` option to set the output format to be a yaml file
+
+---
+
+## Generate a Pod definition file (1)
+ - To generate a `Pod` definition file:
+```console
+# kubectl run nginx --image=nginx --dry-run=client -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null  
+  labels:
+    run: nginx
+  name: nginx
+spec:
+  containers:
+  - image: nginx
+    name: nginx
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+```
+> In the output of the commands there are properties, such as the `creationTimestamp: null`, that can be ignored or eventually removed from the final result
+> In this example the properties that can be removed are: `creationTimestamp: null, resources: {}, dnsPolicy: ClusterFirst, restartPolicy: Always, status: {}`  
+---
+
+## Generate a Pod definition file (2)
+ - Finally we can redirect the output to a file:
+```console
+# kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yml
+# cat pod.yml
+apiVersion: v1
+kind: Pod
+...
+``` 
+---
+## Generate a Deployment definition file (2)
+ - In similar way as above we can create a `Deployment` definition file
+```console
+# kubectl create deployment nginx --image=nginx --dry-run=client -o yaml > deployment.yml
+# cat deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
+```
+> Also in this output there are properties, such as the `creationTimestamp: null`, that can be ignored or eventually removed from the final result
+
+---
+
+## Extract the definition file of an existing object
+TODO
+`kubectl get pod <pod-name> -o yaml > pod-definition.yaml`
+
+## Edit an existing Kubernetes object
+TODO
+`kubectl edit pod <pod-name>`
