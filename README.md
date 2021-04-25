@@ -15,7 +15,7 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
    - Deployment self-healing and scalability
    - Create a pod with yml file
    - Imperative vs Declarative approach
- - Core concepts
+ - Kubernetes object definition file - yaml
  - Application Lifecycle Management
  - Storage
  - Observability: Logging|Monitoring|Tracing

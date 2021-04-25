@@ -1,7 +1,4 @@
-# Section 4 - How to create a kubernetes object using YAML
-# Section 4 - yaml file of Kubernetes objects
-# Section 4 - Kubernetes objects and yaml files
-# Section 4 - Kubernetes objects configuration files - yaml
+# Section 4 - Kubernetes object definition file - yaml
 ---
 
 ## The yaml file of a Kubernetes object
@@ -131,7 +128,7 @@ spec:
 
 ---
 
-## Deployment definition file 
+## Deployment definition file (1)
  - The following is an example of a `deployment.yml` definition file
  - As with any Kubernetes yaml definition file there are 4 sections  
 ```yaml  
@@ -146,6 +143,59 @@ spec:
 ```
 > The contents of the deployment definition file are exactly similar to the ReplicaSet  definition file except for the kind that is **Deployment**
 
+---
 
+## Deployment definition file - rs vs deployment
+![img_width_100](images/rs-vs-deployment-01.png)
+---
 
-## Deployment definition file - labels
+## Deployment definition file - labels sections
+![img_width_100](images/rs-vs-deployment-02.png)
+---
+
+## Deployment definition file - spec sections
+![img_width_100](images/rs-vs-deployment-03.png)
+---
+
+## Deployment cmd (1)
+ - ### `kubectl apply -f deployment.yml` to create the Deployment
+ - ### `kubectl get deployments` to list the Deployments
+ - ### `kubectl get replicasets` to list the ReplicaSets
+ - ### `kubectl get pods` to list the Pods
+ 
+```console
+# kubectl apply -f deployment.yml 
+deployment.apps/nginx-deploy created
+
+controlplane $ kubectl get deployments
+NAME           READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-deploy   1/1     1            1           72s
+
+controlplane $ kubectl get replicasets
+NAME                      DESIRED   CURRENT   READY   AGE
+nginx-deploy-7d9b76dbf7   1         1         1       101s
+controlplane $ 
+
+controlplane $ kubectl get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+nginx-deploy-7d9b76dbf7-gz6hx   1/1     Running   0          114s
+
+```
+---
+
+## Deployment cmd (2)
+ - ### `kubectl get all` - list all resources in the current (default) namespace
+```console
+# kubectl get all
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/nginx-deploy-7d9b76dbf7-gz6hx   1/1     Running   0          2m19s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   8m2s
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deploy   1/1     1            1           2m19s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deploy-7d9b76dbf7   1         1         1       2m19s
+```
