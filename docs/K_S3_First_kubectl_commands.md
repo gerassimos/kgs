@@ -314,7 +314,7 @@ pod "pod-nginx" deleted
 ---
 
 
-## Create a pod with yml file - kubectl create -f
+## Create a pod with yml file - kubectl apply -f
 
 ```console
 # kubectl apply -f pod.yml 
