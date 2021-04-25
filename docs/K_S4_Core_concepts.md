@@ -1,10 +1,10 @@
-# 1 - Core concepts
+# Section 4 - How to create a kubernetes object using YAML
+# Section 4 - yaml file of Kubernetes objects
+# Section 4 - Kubernetes objects and yaml files
 ---
 
-
-
 ## yaml file of a Kubernetes object
- - The yaml file of a Kubernetes object always contains the following fields  
+ - The yaml file of a Kubernetes object always contains the following fields (sections)
 
 ```yaml  
 apiVersion:  
@@ -13,8 +13,8 @@ metadata:
 spec:  
 ```
 ### **apiVersion** = The version of the Kubernetes API used to create this object
-### **kind** = What kind of object to create
-### **metadata** = Data that helps uniquely identify the object, including a name string, labels and optional namespace
+### **kind** = What kind of object to create (Pod, ReplicaSet, Deployment etc.)
+### **metadata** = Data that helps uniquely identify the object, including a `name` string, `labels` and optional `namespace`
 ### **spec** - The state/configuration of the object, (each object type has its own specification)
 
 |kind         |apiVersion  |
@@ -27,14 +27,15 @@ spec:
 ---
 
 ## yaml file of a Pod (1)
- - The following is an example of a `pod.yml` file
+ - The following is an example of a `pod.yml` definition file
 ```yml
 apiVersion: v1
 kind: Pod
 metadata:
   name: nginx-pod
   labels: 
-    app: my-web-app
+    app: my-app
+    env: production
     tier: frontend
 spec:
   containers:
@@ -50,8 +51,8 @@ spec:
 
 ---
 
-## yaml file of a Pod (2)
- - The following is an example of a yaml file of a Pod
+## yaml file of a Pod (2) - containers section
+ 
 ```yml
 ...
 spec:
@@ -84,3 +85,49 @@ spec:
 ### `kubectl apply -f pod.yml`  
 
 
+## yaml file of a ReplicaSet (1)
+ - The following is an example of a `rs.yml` definition file
+ - As with any Kubernetes yaml definition file there are 4 sections 
+ 
+```yaml  
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+spec:
+  replicas:
+  selector:
+  template:
+
+```
+> The spec section:   
+> **replicas** = The the number of desired replicas. Remember a ReplicaSet creates multiple instances of a **Pod**  
+> **selector** = Used as a glue to determine which Pod are managed from the ReplicaSet  
+> **template** = Used for the Pod definition 
+
+---
+
+## yaml file of a ReplicaSet (2)
+![img_width_100](images/pod-vs-rs.png)
+
+---
+
+## yaml file of a ReplicaSet (3)
+
+> But why we need a **selector** since the **template** section already contains the Pod managed from the ReplicaSet?  
+> Because can also manage Pods (of the same type) that are not created part of the ReplicaSet,
+> Pods that were created before the ReplicaSet 
+
+---
+## yaml file of a ReplicaSet (4)
+
+### To create the `ReplicaSet` execute:  
+### `kubectl apply -f rs.yml`  
+### To list the existing ReplicaSet objects 
+### `kubectl get replicaset`  
+ or
+### `kubectl get rs`  
+
+---
+
+## yaml file of a Deployment (1)

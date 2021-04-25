@@ -23,19 +23,20 @@
  - At high level a container is wrapped in a Pod so it can run on kubernetes
  - pod do not serf-heal and the do not scale
  - pod do not support easy updates and rollbacks (undo the update) 
-
+<img single pod single container>
 --- 
 
 ## ReplicaSet - self-healing and scalability
  - If a Pod managed be a ReplicaSet fails, it will be replaced **(self-healing)**
- - We can easily increase or decrease the number of Pods **(scaling)** 
+ - We can easily increase the number of Pods **(scaling)** to handle more load (static site example)
  - It is common not to create ReplicaSet directly but use Deployment to manage the ReplicaSet
+ <img one ReplicaSet multiple Pods>
 ---
 
 ## Deployment
  - Used to provide zero-downtime rolling-updates
  - Every time that we create a Deployment we automatically get a ReplicaSet that manages the Deployment's Pods
- - It important to understand that a single Deployment object can only manage a **single** Pod template  
+ - It important to understand that a Deployment object can only manage a **single** Pod template  
 ---
 
 ## Multi-container Pod 
