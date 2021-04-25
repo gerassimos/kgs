@@ -12,10 +12,13 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
  - First kubectl commands
    - Create a Pod
    - Create a Deployment
-   - Deployment self-healing and scalability
+   - Deployment - Self-healing and Scalability
    - Create a pod with yml file
    - Imperative vs Declarative approach
  - Kubernetes object definition file - yaml
+   - Pod definition file
+   - ReplicaSet definition file
+   - Deployment definition file
  - Application Lifecycle Management
  - Storage
  - Observability: Logging|Monitoring|Tracing
