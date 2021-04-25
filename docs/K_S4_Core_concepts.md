@@ -1,10 +1,12 @@
 # Section 4 - How to create a kubernetes object using YAML
 # Section 4 - yaml file of Kubernetes objects
 # Section 4 - Kubernetes objects and yaml files
+# Section 4 - Kubernetes objects configuration files - yaml
 ---
 
-## yaml file of a Kubernetes object
+## The yaml file of a Kubernetes object
  - The yaml file of a Kubernetes object always contains the following fields (sections)
+ - Both the `.yaml` and `.yml` are valid extensions for a Kubernetes definition file
 
 ```yaml  
 apiVersion:  
@@ -26,7 +28,7 @@ spec:
 
 ---
 
-## yaml file of a Pod (1)
+## Pod definition file (1) 
  - The following is an example of a `pod.yml` definition file
 ```yml
 apiVersion: v1
@@ -51,7 +53,7 @@ spec:
 
 ---
 
-## yaml file of a Pod (2) - containers section
+## Pod definition file (2) - containers section
  
 ```yml
 ...
@@ -68,7 +70,7 @@ spec:
   
 ---
 
-## yaml file of a Pod with 2 containers - Multi-container Pod
+## Pod definition file - Multi-container Pod
 ```yml
 ...
 spec:
@@ -85,7 +87,7 @@ spec:
 ### `kubectl apply -f pod.yml`  
 
 
-## yaml file of a ReplicaSet (1)
+## ReplicaSet definition file (1)
  - The following is an example of a `rs.yml` definition file
  - As with any Kubernetes yaml definition file there are 4 sections 
  
@@ -98,7 +100,6 @@ spec:
   replicas:
   selector:
   template:
-
 ```
 > The spec section:   
 > **replicas** = The the number of desired replicas. Remember a ReplicaSet creates multiple instances of a **Pod**  
@@ -107,19 +108,19 @@ spec:
 
 ---
 
-## yaml file of a ReplicaSet (2)
+## ReplicaSet definition file (2)
 ![img_width_100](images/pod-vs-rs.png)
 
 ---
 
-## yaml file of a ReplicaSet (3)
+## ReplicaSet definition file (3)
 
 > But why we need a **selector** since the **template** section already contains the Pod managed from the ReplicaSet?  
 > Because can also manage Pods (of the same type) that are not created part of the ReplicaSet,
 > Pods that were created before the ReplicaSet 
 
 ---
-## yaml file of a ReplicaSet (4)
+## ReplicaSet definition file (4)
 
 ### To create the `ReplicaSet` execute:  
 ### `kubectl apply -f rs.yml`  
@@ -130,4 +131,21 @@ spec:
 
 ---
 
-## yaml file of a Deployment (1)
+## Deployment definition file 
+ - The following is an example of a `deployment.yml` definition file
+ - As with any Kubernetes yaml definition file there are 4 sections  
+```yaml  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-rs
+spec:
+  replicas:
+  selector:
+  template:
+```
+> The contents of the deployment definition file are exactly similar to the ReplicaSet  definition file except for the kind that is **Deployment**
+
+
+
+## Deployment definition file - labels
