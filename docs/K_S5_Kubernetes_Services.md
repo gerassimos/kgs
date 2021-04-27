@@ -80,6 +80,5 @@
  - How to service is connected to the pod? 
  - As we did with the Deployment and ReplicaSet previously, we use a label `selector`
  - In the `selector` section we must specify a list of labels to identify the pod
-![img_width_100](images/service_pod_selector.png)
-
+![img_width_100](images/pod-vs-service.png)
 
