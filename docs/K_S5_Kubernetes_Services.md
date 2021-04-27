@@ -67,7 +67,7 @@
 ---
 
 ## Service - NodePort - definition file (1)
-![img_width_100](images/service_simple_network_topology_05.png)
+![img_width_100](images/service_simple_network_topology_05b.png)
 ---
 
 ## Service - NodePort - definition file (2)
@@ -82,3 +82,33 @@
  - In the `selector` section we must specify a list of labels to identify the pod
 ![img_width_100](images/pod-vs-service.png)
 
+## Service - NodePort - cmds (1)
+ - To create the service use the `kubectl apply -f service.yml` command
+```console
+# kubectl apply -f service.yml
+service/myapp-service created
+```
+ - To list the services use the `kubectl get services` command
+ ```console
+# kubectl get services
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        57m
+myapp-service   NodePort    10.105.47.242   <none>        80:30008/TCP   15m
+
+```
+> Note that the Service TYPE `NodePort`, the CLUSTER-IP 10.105.47.242 and the <port>:<nodePort> is displayed for the myapp-service
+---
+## Service - NodePort - cmds (2)
+ - From the outside world we can use the IP address of the node to access the web server
+```console
+# curl http://192.168.1.2:30008
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+...
+``` 
+ - From within the cluster we can use the `ClusterIP` of the service to access the web server
+```console
+curl http://10.105.47.242:80
+``` 
