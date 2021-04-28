@@ -112,3 +112,23 @@ myapp-service   NodePort    10.105.47.242   <none>        80:30008/TCP   15m
 ```console
 curl http://10.105.47.242:80
 ``` 
+
+## Service - Multiple POD replicas (one node)
+ - The `Service` is also used when there are Multiple POD replicas, for example multiple instances of a web server
+ - In this case the `Service` is acting as a **Load Balancer** and will forward the request to the selected PODs via a round-robin algorithm
+![img_width_100](images/service_multiple_pods_one_node.png)
+
+> Note that all the POD replicas have all the same labels 
+
+## Service - Multiple POD replicas (multiple nodes)
+ - Also in case the PODs replicas are distributes across multiple nodes, the `Service` without any additional configuration is acting as **Load Balancer**
+
+![img_width_100](images/service_multiple_pods_multiple_nodes_b.png)
+ 
+## Service - (one pod - multiple nodes) 
+ - Though the `Service` the POD is accessible from any node of the cluster
+ - The `Service` is a cluster wide concept. It spans across all nodes of the cluster.
+ - ### `curl 192.168.1.2:30008`
+ - ### `curl 192.168.1.3:30008`
+ - ### `curl 192.168.1.4:30008`
+![img_width_100](images/service_one_pod_multiple_nodes.png)
