@@ -194,14 +194,14 @@ spec:
  - To create the service use the `kubectl apply -f service.yml` command
 ```console
 # kubectl apply -f service.yml
-service/myapp-service created
+service/back-end created
 ```
  - To list the services use the `kubectl get services` command
  ```console
 # kubectl get services
-NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        57m
-myapp-service   NodePort    10.105.47.242   <none>        80:30008/TCP   15m
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+back-end     ClusterIP   10.107.102.56   <none>        80/TCP    2m2s
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP   36m
 
 ```
-> Note that the Service TYPE `NodePort`, the CLUSTER-IP 10.105.47.242 and the <port>:<nodePort> is displayed for the myapp-service
+> The ClusterIP Service can be accessed from other PODS by using the IP address **10.107.102.56** or the name **back-end**
