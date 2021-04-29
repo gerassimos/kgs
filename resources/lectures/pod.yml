@@ -4,7 +4,6 @@ metadata:
   name: nginx-pod
   labels: 
     app: my-app  
-# Comment Test    
 spec:
   containers:
   - name: nginx-container

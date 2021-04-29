@@ -75,7 +75,7 @@
  - If we do not specify a `targetPort` then it assumed to be the same as `port`
  - If we do not specify a `nodePort` then a free one from the valid range [30000-32767] will be automatically assign 
  - Note also that the `ports` value is an array which means that we can have multiple such entries 
-
+-
 ## Service - NodePort - definition file (3) 
  - How to service is connected to the pod? 
  - As we did with the Deployment and ReplicaSet previously, we use a label `selector`
@@ -190,18 +190,37 @@ spec:
  - In the `selector` section we must specify a list of labels to identify the pod
 ![img_width_100](images/pod-vs-service-clusterIP.png)
 
-## Service - ClusterIP - cmds 
+## Service - ClusterIP - cmds (1)
  - To create the service use the `kubectl apply -f service.yml` command
 ```console
 # kubectl apply -f service.yml
 service/back-end created
-```
+```console
  - To list the services use the `kubectl get services` command
  ```console
 # kubectl get services
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
 back-end     ClusterIP   10.107.102.56   <none>        80/TCP    2m2s
 kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP   36m
-
 ```
 > The ClusterIP Service can be accessed from other PODS by using the IP address **10.107.102.56** or the name **back-end**
+
+## Service - ClusterIP - cmds (2)
+ - To see detailed information about a service use the `kubectl describe service <service-name>` command
+```console
+# kubectl describe service back-end 
+Name:              back-end
+Namespace:         default
+Labels:            <none>
+Annotations:       Selector:  app=myapp,type=back-end
+Type:              ClusterIP
+IP:                10.107.102.56
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         10.244.1.3:80
+Session Affinity:  None
+Events:            <none>
+```
+> From the output we can see: 
+> The `Endpoints` 10.244.1.3:80, which represent th IP addresses of the *healthy** PODs
+> The `Selector` app=myapp,type=back-end, which are the labels of the *back-end* PODs
