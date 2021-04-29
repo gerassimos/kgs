@@ -112,19 +112,19 @@ myapp-service   NodePort    10.105.47.242   <none>        80:30008/TCP   15m
 ```console
 curl http://10.105.47.242:80
 ``` 
-
+---
 ## Service - Multiple POD replicas (one node)
  - The `Service` is also used when there are Multiple POD replicas, for example multiple instances of a web server
  - In this case the `Service` is acting as a **Load Balancer** and will forward the request to the selected PODs via a round-robin algorithm
 ![img_width_100](images/service_multiple_pods_one_node.png)
 
 > Note that all the POD replicas have all the same labels 
-
+---
 ## Service - Multiple POD replicas (multiple nodes)
  - Also in case the PODs replicas are distributes across multiple nodes, the `Service` without any additional configuration is acting as **Load Balancer**
 
 ![img_width_100](images/service_multiple_pods_multiple_nodes_b.png)
- 
+--- 
 ## Service - (one pod - multiple nodes) 
  - Though the `Service` the POD is accessible from any node of the cluster
  - The `Service` is a cluster wide concept. It spans across all nodes of the cluster.
@@ -132,3 +132,76 @@ curl http://10.105.47.242:80
  - ### `curl 192.168.1.3:30008`
  - ### `curl 192.168.1.4:30008`
 ![img_width_100](images/service_one_pod_multiple_nodes.png)
+
+---
+
+## Service - ClusterIP (1)
+ - A full stack web application typically has different kinds of pods hosting different parts of an application 
+TODO 
+![img_width_100](images/multiple_deployments_multiple_pods_01.png) 
+> In this example we have a number of pods (replicas) for the *front-end* stack, the *back-end* stack and the key-value store DB 
+> This is an example of a **microservice** architecture 
+
+## Service - ClusterIP (2)
+ - The *fron-end* pods need to communicate with the *back-end* pods
+ - The *back-end* pods need to communicate with the *redis* pods
+TODO 
+![img_width_100](images/multiple_deployments_multiple_pods_02.png) 
+
+## Service - ClusterIP (3)
+ - What is the right way to establish connectivity between the various PODs of an application ?
+ - We cannot relay on the POD IP addresses as they are not static, they may change if a POD is killed and a new one take place 
+ - In this case the `Service` of type **ClusterIP** is the Solution  
+ - The **ClusterIP** `Service` provides a **single interface** to access the PODs replicas
+ - In this example 
+   - A *backend* service is used from the *front-end* pods to access the *back-end* pods
+   - a *redis* service is used from the *back-end* pods to access the *redis* pods 
+ - A **stable IP address** and a **name** **(DNS name)** is assign on each `Service`
+ - The **name** of Service is used to access the PODs
+
+---
+
+## Service - ClusterIP - definition file (1)
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-end
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: myapp
+    type: back-end
+```
+ - The `targetPort` field is the port where the `back-end` PODs receive the request
+ - The `port` field is the port of the Service which is acting as proxy and a Load Balancer for the back-end PODs
+ - The only mandatory field is `port`
+ - If we do not specify a `targetPort` then it assumed to be the same as `port`
+ - The `type` is `ClusterIP`, we can omit it since it is the default type.
+ - The `name` field is used to create a DNS record (DNS name)
+ - The `front-end` PODs should use the ***DNS name** of the Service to access the `back-end` PODs
+---
+## Service - ClusterIP - definition file (2)
+ - As before we use a `selector` to link the Service to the `back-end` PODs
+ - In the `selector` section we must specify a list of labels to identify the pod
+![img_width_100](images/pod-vs-service-clusterIP.png)
+
+## Service - ClusterIP - cmds 
+ - To create the service use the `kubectl apply -f service.yml` command
+```console
+# kubectl apply -f service.yml
+service/myapp-service created
+```
+ - To list the services use the `kubectl get services` command
+ ```console
+# kubectl get services
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes      ClusterIP   10.96.0.1       <none>        443/TCP        57m
+myapp-service   NodePort    10.105.47.242   <none>        80:30008/TCP   15m
+
+```
+> Note that the Service TYPE `NodePort`, the CLUSTER-IP 10.105.47.242 and the <port>:<nodePort> is displayed for the myapp-service
