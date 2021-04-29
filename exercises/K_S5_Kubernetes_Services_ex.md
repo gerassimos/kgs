@@ -15,7 +15,7 @@
 
 ### Exercise 2 - Service NodePort
  - Use the `deployment-front-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `front-end` stack.
- - Verify that the kubernetes objects of the `front-end` deployment are created successfully. 
+ - Verify that the kubernetes objects of the `front-end` deployment are created successfully. How many PODs are created ?
  - Create a `service-front-end.yml` definition file of a NodePort Service with the following specifications:
    - type: NodePort
    - port: 8080, targetPort: 80, nodePort: 30008
@@ -42,4 +42,153 @@
 ---
 
 ## Exercises -  Solution 
-TODO
+### Exercise 1 - Explore the services in the **default** namespace
+ - How many Services exist on the system? in the current(default) namespace?
+ - What is the type of the default kubernetes service?
+```console
+# kubectl get services
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   34m
+```
+> There one `ClusterIP` Service with name `kubernetes` 
+> NOTE:  
+> This is a *default* service created by Kubernetes at cluster creation time.
+
+ - What is the targetPort configured on the kubernetes service?
+ - How many Endpoints are attached on the kubernetes service?
+```console
+# kubectl describe service kubernetes 
+Name:              kubernetes
+Namespace:         default
+Labels:            component=apiserver
+                   provider=kubernetes
+Annotations:       <none>
+Selector:          <none>
+Type:              ClusterIP
+IP:                10.96.0.1
+Port:              https  443/TCP
+TargetPort:        6443/TCP
+Endpoints:         172.17.0.14:6443
+Session Affinity:  None
+Events:            <none>
+```
+> The `targetPort` of the `kubernetes` Service is 6443
+> There is one `Endpoint` with IP address 172.17.0.14:6443
+
+---
+
+### Exercise 2 - Service NodePort
+ - Use the `deployment-front-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `front-end` stack.
+```console
+# git clone https://github.com/gerassimos/kgs.git
+Cloning into 'kgs'...
+
+# cd kgs/
+# kubectl apply -f resources/lectures/deployment-front-end.yml 
+deployment.apps/front-end created
+``` 
+
+ - Verify that the kubernetes objects of the `front-end` deployment are created successfully. 
+```console
+controlplane $ kubectl get all
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/front-end-5bfcc74c4c-4q4xv   1/1     Running   0          8m38s
+pod/front-end-5bfcc74c4c-csvv4   1/1     Running   0          8m38s
+pod/front-end-5bfcc74c4c-p7r2x   1/1     Running   0          8m38s
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          53m
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/front-end   3/3     3            3           8m38s
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/front-end-5bfcc74c4c   3         3         3       8m38s
+```
+> The front-end Deployment has created 3 replica PODs (front-end-5bfcc74c4c-4q4xv, front-end-5bfcc74c4c-csvv4 and front-end-5bfcc74c4c-p7r2x)
+
+ - Create a `service-front-end.yml` definition file of a NodePort Service with the following specifications:
+   - type: NodePort
+   - port: 8080, targetPort: 80, nodePort: 30008
+   - selector: app=myapp, type=front-end
+   - name: front-end
+ - Use the `service-front-end.yml` definition file to actually create the service and view the details of the service, which are the Endpoints attached on the `front-end` service? which are the IP addresses of the front-end POD(s)
+
+service-front-end.yml 
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: front-end
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 80
+      nodePort: 30008
+  selector:
+    app: myapp
+    type: front-end
+```
+
+```console
+# kubectl apply -f service-front-end.yml 
+service/front-end created
+
+# kubectl get services
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+front-end    NodePort    10.109.67.213   <none>        8080:30008/TCP   9m42s
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          59m
+```
+
+ - Use the IP address of a Kubernetes Node to access the *front-end* web stack
+```console
+$ kubectl get nodes -o wide
+NAME           STATUS   ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION       CONTAINER-RUNTIME
+controlplane   Ready    master   60m   v1.18.0   172.17.0.14   <none>        Ubuntu 18.04.5 LTS   4.15.0-122-generic   docker://19.3.13
+node01         Ready    <none>   55m   v1.18.0   172.17.0.18   <none>        Ubuntu 18.04.5 LTS   4.15.0-122-generic   docker://19.3.13
+
+# curl 172.17.0.14:30008
+<!DOCTYPE html>
+<html>
+...
+
+or
+# curl 172.17.0.18:30008
+<!DOCTYPE html>
+<html>
+...
+```
+> From the output of the `kubectl get nodes -o wide` command we can see that the IP addresses of the Kubernetes nodes are 172.17.0.14 and 172.17.0.18
+
+ - Use the IP address of the `front-end` service to access the *front-end* web stack
+```console
+ $ kubectl get service
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+front-end    NodePort    10.109.67.213   <none>        8080:30008/TCP   14m
+kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP          64m
+
+# curl 10.109.67.213:8080
+<!DOCTYPE html>
+<html>
+...
+```
+ - Use the IP address of a front-end POD to access the *front-end* web stack
+```console
+$ kubectl get pods -o wide
+NAME                         READY   STATUS    RESTARTS   AGE   IP           NODE     NOMINATED NODE   READINESS GATES
+front-end-5bfcc74c4c-4q4xv   1/1     Running   0          21m   10.244.1.4   node01   <none>           <none>
+front-end-5bfcc74c4c-csvv4   1/1     Running   0          21m   10.244.1.5   node01   <none>           <none>
+front-end-5bfcc74c4c-p7r2x   1/1     Running   0          21m   10.244.1.3   node01   <none>           <none>
+
+# curl 10.244.1.3:80
+or
+# curl 10.244.1.4:80
+or 
+# curl 10.244.1.5:80
+<!DOCTYPE html>
+<html>
+...
+```
+> In this case we have used the `kubectl get pods -o wide` command to display the IP addressed of the PODs
+---
