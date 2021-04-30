@@ -1,5 +1,4 @@
-
-# Section 3 - First kubectl commands 
+# Section 4 - First kubectl commands 
 
 ---
 ## Exercises   

@@ -1,5 +1,5 @@
 
-# Section 2 - Basic Deployment objects
+# Section 3 - Basic Deployment objects
 ---
 
 ### Question 1

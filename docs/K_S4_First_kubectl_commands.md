@@ -1,4 +1,4 @@
-# 3 - First kubectl commands
+# Section 4 - First kubectl commands
 ---
 ## Common commands (pods)
  - ### `kubectl run` - create a pod

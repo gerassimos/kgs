@@ -1,4 +1,4 @@
-# Section 2 - Basic Deployment objects
+# Section 3 - Basic Deployment objects
 ---
 ## Basic Deployment objects
 ### `Pod` -> The smallest deployable unit

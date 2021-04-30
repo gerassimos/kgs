@@ -1,4 +1,4 @@
-# 1 - Kubernetes architecture 
+# Section 2 - Kubernetes architecture
 ---
 
 ## Simple Kubernetes Diagram (1)

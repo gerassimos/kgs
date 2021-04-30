@@ -1,5 +1,5 @@
 
-# Section 1 - Kubernetes architecture 
+# Section 2 - Kubernetes architecture 
 
 ---
 ## Quiz  

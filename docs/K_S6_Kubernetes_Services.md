@@ -1,4 +1,4 @@
-# Section 5 - Kubernetes Services
+# Section 6 - Kubernetes Services
 
 ---
 
