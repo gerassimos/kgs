@@ -114,7 +114,8 @@ replicaset.apps/front-end-5bfcc74c4c   3         3         3       8m38s
    - name: front-end
  - Use the `service-front-end.yml` definition file to actually create the service and view the details of the service, which are the Endpoints attached on the `front-end` service? which are the IP addresses of the front-end POD(s)
 
-service-front-end.yml 
+service-front-end.yml
+---------------------
 ```yaml
 apiVersion: v1
 kind: Service
