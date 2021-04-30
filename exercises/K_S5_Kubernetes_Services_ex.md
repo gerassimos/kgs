@@ -192,3 +192,15 @@ or
 ```
 > In this case we have used the `kubectl get pods -o wide` command to display the IP addressed of the PODs
 ---
+
+### Exercise 3 - Service ClusterIP
+ - Use the `deployment-back-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `back-end` stack.
+ - Verify that the kubernetes objects of the `back-end` deployment are created successfully. 
+ - Create a Service by using the `kubectl expose` command with the following specifications:
+   - type: ClusterIP
+   - port: 8090, targetPort: 80
+   - selector: app=myapp, type=back-end
+   - name: back-end
+ - Use the IP address of the `back-end` service to access the *back-end* web stack
+ - Use the IP address of a back-end POD to access the *back-end* web stack
+ - Use the busybox "helper" POD to test the DNS resolution of the `back-end` service
