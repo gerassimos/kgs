@@ -1,20 +1,22 @@
-# Section 5 - Kubernetes object definition file - yaml
+class: center, middle
+# Section 5 
+## Kubernetes object definition file - yaml
 ---
-
 ## The yaml file of a Kubernetes object
  - The yaml file of a Kubernetes object always contains the following fields (sections)
  - Both the `.yaml` and `.yml` are valid extensions for a Kubernetes definition file
-
-```yaml  
+```yml
 apiVersion:  
 kind:  
 metadata:  
 spec:  
 ```
-### **apiVersion** = The version of the Kubernetes API used to create this object
-### **kind** = What kind of object to create (Pod, ReplicaSet, Deployment etc.)
-### **metadata** = Data that helps uniquely identify the object, including a `name` string, `labels` and optional `namespace`
-### **spec** - The state/configuration of the object, (each object type has its own specification)
+ - **apiVersion** = The version of the Kubernetes API used to create this object
+ - **kind** = What kind of object to create (Pod, ReplicaSet, Deployment etc.)
+ - **metadata** = Data that helps uniquely identify the object, including a `name` string, `labels` and optional `namespace`
+ - **spec** - The state/configuration of the object, (each object type has its own specification)
+---
+## TODO
 
 |kind         |apiVersion  |
 |-------------|------------|
@@ -131,7 +133,8 @@ spec:
 ## Deployment definition file (1)
  - The following is an example of a `deployment.yml` definition file
  - As with any Kubernetes yaml definition file there are 4 sections  
-```yaml  
+
+```yml  
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -141,7 +144,8 @@ spec:
   selector:
   template:
 ```
-> The contents of the deployment definition file are exactly similar to the ReplicaSet  definition file except for the kind that is **Deployment**
+
+>The contents of the deployment definition file are exactly similar to the ReplicaSet  definition file except for the kind that is **Deployment**
 
 ---
 
@@ -158,10 +162,10 @@ spec:
 ---
 
 ## Deployment cmd (1)
- - ### `kubectl apply -f deployment.yml` to create the Deployment
- - ### `kubectl get deployments` to list the Deployments
- - ### `kubectl get replicasets` to list the ReplicaSets
- - ### `kubectl get pods` to list the Pods
+ - `kubectl apply -f deployment.yml` to create the Deployment
+ - `kubectl get deployments` to list the Deployments
+ - `kubectl get replicasets` to list the ReplicaSets
+ - `kubectl get pods` to list the Pods
  
 ```console
 # kubectl apply -f deployment.yml 
@@ -184,7 +188,8 @@ nginx-deploy-7d9b76dbf7-gz6hx   1/1     Running   0          114s
 ---
 
 ## Deployment cmd (2)
- - ### `kubectl get all` - list all resources in the current (default) namespace
+ - `kubectl get all` - list all resources in the current (default) namespace  
+
 ```console
 # kubectl get all
 NAME                                READY   STATUS    RESTARTS   AGE
@@ -199,7 +204,7 @@ deployment.apps/nginx-deploy   1/1     1            1           2m19s
 NAME                                      DESIRED   CURRENT   READY   AGE
 replicaset.apps/nginx-deploy-7d9b76dbf7   1         1         1       2m19s
 ```
-
+---
 ## Generate a Kubernetes object definition file
  - We can generate a Kubernetes object definition file by using the: `--dry-run=client -o yaml`
  - We use the `--dry-run=client` option to preview the object that we would like to create
