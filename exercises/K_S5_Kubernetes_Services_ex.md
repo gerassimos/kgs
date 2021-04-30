@@ -37,7 +37,7 @@
    - name: back-end
  - Use the IP address of the `back-end` service to access the *back-end* web stack
  - Use the IP address of a back-end POD to access the *back-end* web stack
- - Use the busybox "helper" POD to test the DNS resolution of the `back-end` service
+ - [Optional] Use the [Debugging DNS Resolution](https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/) tutorial to test the DNS resolution of the `back-end` service
 
 ---
 
@@ -195,12 +195,104 @@ or
 
 ### Exercise 3 - Service ClusterIP
  - Use the `deployment-back-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `back-end` stack.
+```console
+# git clone https://github.com/gerassimos/kgs.git
+Cloning into 'kgs'...
+
+# cd kgs/
+# kubectl apply -f resources/lectures/deployment-back-end.yml 
+deployment.apps/back-end created
+```  
+
  - Verify that the kubernetes objects of the `back-end` deployment are created successfully. 
+```console 
+# kubectl get all
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/back-end-675bbd589-bwj6v   1/1     Running   0          114s
+pod/back-end-675bbd589-hpwgf   1/1     Running   0          114s
+pod/back-end-675bbd589-lvrl8   1/1     Running   0          114s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   10m
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/back-end   3/3     3            3           114s
+
+NAME                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/back-end-675bbd589   3         3         3       114s
+```
  - Create a Service by using the `kubectl expose` command with the following specifications:
    - type: ClusterIP
    - port: 8090, targetPort: 80
    - selector: app=myapp, type=back-end
    - name: back-end
+```console
+# kubectl expose deployment back-end \
+  --port=8090 --target-port=80 --name=back-end \
+  --dry-run=client -o yaml > service-back-end.yml 
+# cat service-back-end.yml 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: back-end
+spec:
+  ports:
+  - port: 8090
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: myapp
+    type: back-end
+status:
+  loadBalancer: {}
+# kubectl apply -f service-back-end.yml 
+service/back-end created
+```
+
  - Use the IP address of the `back-end` service to access the *back-end* web stack
+```
+# kubectl get services
+NAME         TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+back-end     ClusterIP   10.111.1.46   <none>        8090/TCP   88s
+kubernetes   ClusterIP   10.96.0.1     <none>        443/TCP    20m
+
+curl 10.111.1.46:8090
+<!DOCTYPE html>
+<html>
+...
+``` 
  - Use the IP address of a back-end POD to access the *back-end* web stack
- - Use the busybox "helper" POD to test the DNS resolution of the `back-end` service
+```console
+$ kubectl get pods -o wide
+NAME                       READY   STATUS    RESTARTS   AGE   IP           NODE     NOMINATED NODE   READINESS GATES
+back-end-675bbd589-bwj6v   1/1     Running   0          15m   10.244.1.3   node01   <none>           <none>
+back-end-675bbd589-hpwgf   1/1     Running   0          15m   10.244.1.4   node01   <none>           <none>
+back-end-675bbd589-lvrl8   1/1     Running   0          15m   10.244.1.5   node01   <none>           <none>
+
+# curl 10.244.1.3:80
+or
+# curl 10.244.1.4:80
+or 
+# curl 10.244.1.5:80
+<!DOCTYPE html>
+<html>
+...
+```
+
+ - [Optional] Use the [Debugging DNS Resolution](https://kubernetes.io/docs/tasks/administer-cluster/dns-debugging-resolution/) tutorial to test the DNS resolution of the `back-end` service
+
+```console
+# kubectl apply -f https://k8s.io/examples/admin/dns/dnsutils.yaml
+pod/dnsutils created
+controlplane $ kubectl get pods dnsutils
+NAME       READY   STATUS    RESTARTS   AGE
+dnsutils   1/1     Running   0          10s
+
+controlplane $ kubectl exec -i -t dnsutils -- nslookup back-end
+Server:         10.96.0.10
+Address:        10.96.0.10#53
+
+Name:   back-end.default.svc.cluster.local
+Address: 10.111.1.46
+``` 
