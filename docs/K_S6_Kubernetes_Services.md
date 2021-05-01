@@ -137,7 +137,6 @@ curl http://10.105.47.242:80
 
 ## Service - ClusterIP (1)
  - A full stack web application typically has different kinds of pods hosting different parts of an application 
-TODO 
 ![img_width_100](images/multiple_deployments_multiple_pods_01.png) 
 > In this example we have a number of pods (replicas) for the *front-end* stack, the *back-end* stack and the key-value store DB 
 > This is an example of a **microservice** architecture 
@@ -145,7 +144,6 @@ TODO
 ## Service - ClusterIP (2)
  - The *fron-end* pods need to communicate with the *back-end* pods
  - The *back-end* pods need to communicate with the *redis* pods
-TODO 
 ![img_width_100](images/multiple_deployments_multiple_pods_02.png) 
 
 ## Service - ClusterIP (3)
@@ -158,25 +156,12 @@ TODO
    - a *redis* service is used from the *back-end* pods to access the *redis* pods 
  - A **stable IP address** and a **name** **(DNS name)** is assign on each `Service`
  - The **name** of Service is used to access the PODs
-
+![img_width_100](images/multiple_deployments_multiple_pods_03.png) 
 ---
 
 ## Service - ClusterIP - definition file (1)
+![img_width_100](images/service_simple_network_topology_06_cluster_ip.png) 
 
-```yml
-apiVersion: v1
-kind: Service
-metadata:
-  name: back-end
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: 80
-  selector:
-    app: myapp
-    type: back-end
-```
  - The `targetPort` field is the port where the `back-end` PODs receive the request
  - The `port` field is the port of the Service which is acting as proxy and a Load Balancer for the back-end PODs
  - The only mandatory field is `port`

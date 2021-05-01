@@ -25,9 +25,13 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
    - ReplicaSet definition file
    - Deployment definition file
    - Generate a Kubernetes object definition file - dry-run
+ - Kubernetes Services
+   - ClusterIP Service
+   - NodePort Service
+   - LoadBalancer Service
  - Application Lifecycle Management
  - Storage
  - Observability: Logging|Monitoring|Tracing
- - Design a Kubernetes Cluster
+ - Choosing the Right Container Infrastructure
  
  
