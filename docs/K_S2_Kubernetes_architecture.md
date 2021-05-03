@@ -6,21 +6,25 @@ background-image: url(images/Kubernetes_20architecture_20diagram_b.png)
 background-size: 100% 100%
 ---
 ## Node types 
- - Master Nodes => run the control plane components
- - Worker Nodes => run application workloads
- <img one master and multiple workers nodes>
+ - `Master Nodes` => run the **control plane** components
+ - `Worker Nodes` => run **application workloads**
+ 
+<p style="text-align: center;">
+  <img src="images/K_S2_one_master_3workers_nodes.png" alt="img_width_80">
+</p> 
 ---
 ## Master Nodes - control plane components
- - The control plane is the brain and heart of Kubernetes
+ - The control plane is the **brain** and heart of Kubernetes
  - Kubernetes components that control the cluster
  - Manages the worker `Nodes` and the `Pods` in the cluster
- - Can run also application workloads
- - However, a best practice is not to deploy application workloads on a master nodes
+ - Can also run **application workloads**
+ - However, a best practice is **not** to deploy application workloads on a master nodes
 ---
 ## control plane - kube-apiserver
  - It is at the center of all Control Plane Components
- - The kube-apiserver exposes the Kubernetes REST API (http endpoints)
- - It is used by external clients such as the kubectl
+ - The kube-apiserver exposes the Kubernetes `REST API` *(http endpoints)*
+ - It is used by external clients such as the `kubectl`
+![img_width_50](images/Kubernetes_20architecture_20diagram_controlplane.png)
 ---
 ## control plane - etcd
  - Is the Database used to store information in a key-value format
@@ -78,7 +82,7 @@ gm-123   Ready    <none>                 53d   v1.20.2
  - `CSI` = Container Storage Interface  
 
 <p style="text-align: center;">
-<img src="images/K_S1_k8s_CRI_CNI_CSI_b.jpg" alt="img_width_80">
+  <img src="images/K_S1_k8s_CRI_CNI_CSI_b.jpg" alt="img_width_80">
 </p>
 ---
 
