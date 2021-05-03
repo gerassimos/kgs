@@ -11,7 +11,8 @@ background-size: 100% 100%
  
 <p style="text-align: center;">
   <img src="images/K_S2_one_master_3workers_nodes.png" alt="img_width_80">
-</p> 
+</p>
+  
 ---
 ## Master Nodes - control plane components
  - The control plane is the **brain** and heart of Kubernetes
