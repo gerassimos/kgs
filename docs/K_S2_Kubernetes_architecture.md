@@ -35,6 +35,7 @@ background-size: 100% 100%
 <p style="text-align: center;">
   <img src="images/Kubernetes_20architecture_20diagram_controlplane.png" width="40%">
 </p>
+
 ---
 ## control plane - kube-scheduler
  - identifies the right node to place a container based on container's resource requirements 
@@ -56,6 +57,7 @@ background-size: 100% 100%
 <p style="text-align: center;">
   <img src="images/Kubernetes_20architecture_20diagram_controlplane.png" width="50%">
 </p>
+
 ---
 ## control plane components running as pods
  - There are 2 types of kubernetes deployments 
@@ -70,18 +72,26 @@ background-size: 100% 100%
  - Listen for instructions from the **kube-apiserver**
  - When receives instruction to create a POD => send the request to the **container run** time such as Docker to pull the images and create the containers
 <p style="text-align: center;">
-  <img src="images/Kubernetes_20architecture_20diagram_b_worker_node.png" alt="img_width_50">
+  <img src="images/Kubernetes_20architecture_20diagram_b_worker_node.png" width="50%">
 </p>
+
 ---
 ## kube-proxy
  - The **kube-proxy** is a process that runs on each node of the cluster (can be deployed as a DaemonSet)
  - Every time a new service is created it creates the appropriate **iptables rules**
+<p style="text-align: center;">
+  <img src="images/Kubernetes_20architecture_20diagram_b_worker_node.png" width="50%">
+</p>
+
 ---
 ## kubectl (1)
  - It is the main cli tool to manage the kubernetes cluster
  - `kubectl` is a client for the Kubernetes API (kube-apiserver)
  - The Kubernetes API is an http Rest API
  - Kubernetes is fully controlled through this API
+<p style="text-align: center;">
+  <img src="images/Kubernetes_20architecture_20diagram_controlplane.png" width="40%">
+</p>
 
 ---
 ## kubectl (2)
@@ -104,12 +114,13 @@ gm-123   Ready    <none>                 53d   v1.20.2
 </p>
 ---
 
-## Installation options
- ### Docker Desktop (Enable Kubernetes)
- ### Minikube (--driver=virtualbox)
- ### MicroK8s (Canonical - Ubuntu)
- ### Play with kubernetes (online web based)
- ### Katacoda (online web based)
+## Installation options for Dev
+ - Docker Desktop (Enable Kubernetes)
+ - Minikube (--driver=virtualbox)
+ - MicroK8s (Canonical - Ubuntu)
+ - K3S (Lightweight Kubernetes - Rancher)
+ - Play with kubernetes (online web based)
+ - Katacoda (online web based)
 
 
 
