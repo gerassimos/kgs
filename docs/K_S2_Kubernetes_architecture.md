@@ -5,6 +5,8 @@ class: center, middle
 background-image: url(images/Kubernetes_20architecture_20diagram_b.png)
 background-size: 100% 100%
 ---
+![img_width_100_height_100](images/Kubernetes_20architecture_20diagram_b.png)
+---
 ## Node types 
  - `Master Nodes` => run the **control plane** components
  - `Worker Nodes` => run **application workloads**
@@ -17,7 +19,7 @@ background-size: 100% 100%
 ## Master Nodes - control plane components
  - The control plane is the **brain** and heart of Kubernetes
  - Kubernetes components that control the cluster
- - Manages the worker `Nodes` and the `Pods` in the cluster
+ - Manages the **Worker Nodes** and the **Pods** in the cluster
  - Can also run **application workloads**
  - However, a best practice is **not** to deploy application workloads on a master nodes
 ---
@@ -28,33 +30,48 @@ background-size: 100% 100%
 ![img_width_50](images/Kubernetes_20architecture_20diagram_controlplane.png)
 ---
 ## control plane - etcd
- - Is the Database used to store information in a key-value format
- - <img DB>
+ - Is the **Database** used to store information in a **key-value** format
+   ![img_width_50](images/K_etcd_db.png)
+<p style="text-align: center;">
+  <img src="images/Kubernetes_20architecture_20diagram_controlplane.png" width="40%">
+</p>
 ---
 ## control plane - kube-scheduler
  - identifies the right node to place a container based on container's resource requirements 
- - The kube-scheduler goes over 2 phases
-   1. Filter out the nodes that does not fit (e.g not enough cpu)
-   2. Ranks the nodes to identify the best fit
- - <img nodes with CPU slots - filter>
- - <img nodes with CPU slots - ranks>
+ - The `kube-scheduler` goes over 2 phases:
+   1. **Filter out** the nodes that does not fit (e.g not enough cpu)
+   2. **Ranks the nodes** to identify the best fit
+
+<p style="text-align: center;">
+  <img src="images/Kubernetes_20architecture_20diagram_controlplane.png" width="40%">
+</p>
+
+<img TODO nodes with CPU slots - filter>
+<img TODO nodes with CPU slots - ranks>
+ 
 ---
-## control plane - kube-controller
- - The kube-controller continuously monitor the state of the various deployment components and works towards bringing the whole system  to the desired state
- - Example the replication-controller check that the desired number of PODs are available
+## control plane - kube-controller-manager
+ - The **kube-controller-manager** continuously monitor the state of the various deployment components and works towards bringing the whole system  to the desired state
+ - Example the **replication-controller** check that the desired number of PODs are available
+<p style="text-align: center;">
+  <img src="images/Kubernetes_20architecture_20diagram_controlplane.png" width="50%">
+</p>
 ---
 ## control plane components running as pods
  - There are 2 types of kubernetes deployments 
-   1. The `hard way` from scratch 
-   2. Via the `kubeadm` tool
+   1. The **hard way** from scratch 
+   2. Via the **kubeadm** tool
   
- 1. The `hard way` => all control plan components are running as **linux services** 
- 2. Via the `kubeadm` tool => all control plan components are running as "static" **PODs** 
+ 1. The **hard way** => all control plan components are running as **linux services** 
+ 2. Via the **kubeadm** tool => all control plan components are running as "static" **PODs** 
 ---
 ## kubelet
  - Is a **linux service** running each node of the cluster
  - Listen for instructions from the **kube-apiserver**
- - When receives instruction to create a POD => send the request to the **container run** time such as Docker to pull the images and create the containers 
+ - When receives instruction to create a POD => send the request to the **container run** time such as Docker to pull the images and create the containers
+<p style="text-align: center;">
+  <img src="images/Kubernetes_20architecture_20diagram_b_worker_node.png" alt="img_width_50">
+</p>
 ---
 ## kube-proxy
  - The **kube-proxy** is a process that runs on each node of the cluster (can be deployed as a DaemonSet)
