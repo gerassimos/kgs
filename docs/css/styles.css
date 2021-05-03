@@ -20,7 +20,7 @@ h1, h2, h3 {
 }
 
 .remark-slide-content:not(.inverse) {
-   background: #fff url('background_blue_docker_02.png') no-repeat;
+   background: #fff url('background_01.png') no-repeat;
    background-size: 100% 100%;
 
    /* background: #fff url('docker_logo_old_01.png') no-repeat 20px bottom;*/
@@ -62,6 +62,10 @@ img[alt="img_width_100"] {
 }
 img[alt="img_width_90"] {
   width: 90%;
+}
+
+img[alt="img_width_80"] {
+    width: 80%;
 }
 
 
