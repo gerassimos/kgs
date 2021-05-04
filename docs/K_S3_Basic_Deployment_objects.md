@@ -1,16 +1,30 @@
-# Section 3 - Basic Deployment objects
+class: center, middle
+# Section 3  
+## Basic Deployment objects  
+
 ---
+
 ## Basic Deployment objects
-### `Pod` -> The smallest deployable unit
-### `ReplicaSet` -> Used to provide self-healing and scaling
-### `Deployment` -> Used to provide zero-downtime rolling-updates
-### `Service`    -> Provide stable reliable networking for Pods (cannot relay on Pod IP)
-### `Namespace`  -> logically divide the cluster in multiple virtual clusters
+ - `Pod` -> The smallest deployable unit
+ - `ReplicaSet` -> Used to provide **self-healing** and **scaling**
+ - `Deployment` -> Used to provide zero-downtime **rolling-updates**
+ - `Service`    -> Provide stable **reliable networking** for Pods (cannot relay on Pod IP)
+ - `Namespace`  -> **logically divide** the cluster in multiple virtual clusters
+<br>  
+<br>  
+![img_width_90](images/k8s_drawio_icons_02.png)
+
+
 ---
 
 ## Basic Deployment objects - Deployment 
- - <img box Deployment in box ReplicaSet in Box Pod>
- - A pod is managed by a ReplicaSet which is managed by a Deployment
+<table style="width:100%">
+  <tr>
+    <td>A <b>Pod</b> is managed by a <b>ReplicaSet</b> which is managed by a <b>Deployment</b></td>
+    <td><img src="images/k8s_drawio_icons_02-Page-2.png" height="450px"></td>
+  </tr>
+</table>  
+
 ---
 
 ## Pod 
