@@ -28,10 +28,9 @@ class: center, middle
 
 ---
 
-## Pod 
- 
+## Pod (1) 
 
-<table style="width:100%">
+<table>
   <tr>
     <td> 
         <ul>
@@ -40,39 +39,53 @@ class: center, middle
           <li>The containers are <b>encapsulated</b> into a kubernetes object known as pods</li>
         </ul> 
     </td>
-    <td><img src="images/k8s_drawio_icons_02-Page-3.png" height="350px"></td>
+    <td><img src="images/k8s_drawio_icons_02-Page-3.png"></td>
   </tr>
 </table>
   
 ---
 
-## Pod 
- - Pod is the smallest deployable unit
- - At high level a container is wrapped in a Pod so it can run on kubernetes
- - pod do not serf-heal and the do not scale
- - pod do not support easy updates and rollbacks (undo the update) 
-<img single pod single container>
---- 
+## Pod (2)
+
+<table>
+  <tr>
+    <td> 
+      <ul>
+        <li>Pod is the smallest <b>deployable</b> unit</li>
+        <li>At high level a <b>container</b> is wrapped in a <b>Pod</b> so it can run on kubernetes</li>
+        <li>Pod do not <b>serf-heal</b> and the do not <b>scale</b></li>
+        <li>Pod do not support easy updates and <b>rollbacks</b> (undo the update)</li>
+      </ul> 
+    </td>
+    <td><img src="images/k8s_drawio_icons_02-Page-3.png"></td>
+  </tr>
+</table>
+  
+---
 
 ## ReplicaSet - self-healing and scalability
  - If a Pod managed be a ReplicaSet fails, it will be replaced **(self-healing)**
  - We can easily increase the number of Pods **(scaling)** to handle more load (static site example)
- - It is common not to create ReplicaSet directly but use Deployment to manage the ReplicaSet
- <img one ReplicaSet multiple Pods>
+ - It is common not to create ReplicaSet directly but use **Deployment** to manage the ReplicaSet
+![img_width_90](images/k8s_drawio_icons_02-Page-4.png)  
+
 ---
 
 ## Deployment
  - Used to provide zero-downtime rolling-updates
  - Every time that we create a Deployment we automatically get a ReplicaSet that manages the Deployment's Pods
- - It important to understand that a Deployment object can only manage a **single** Pod template  
+ - It important to understand that a Deployment object can only manage a **single** Pod template
+![img_width_90](images/k8s_drawio_icons_02-Page-5.png)  
+  
 ---
 
 ## Multi-container Pod 
  - We can have more that one container in Pod
- - Containers deployed in a Pod are always co-located 
- - They share the same network stack and volumes
-<img Multi-container Pod sharing the same network stack and volumes> 
-
+ - Containers deployed in a Pod are always **co-located** 
+ - They share the same **network** stack and **volumes**
+![img_width_70](images/k8s_drawio_icons_02-Page-6.png) 
+  
+---
 ## Namespace
  - It is used to logically divide the cluster in multiple virtual clusters
  - For example we can have namespace for the `prod` environment and one for the `test` environment
