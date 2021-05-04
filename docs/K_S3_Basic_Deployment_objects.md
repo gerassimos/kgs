@@ -29,9 +29,22 @@ class: center, middle
 ---
 
 ## Pod 
- - With Kubernetes our ultimate aim is to deploy our application in the form of containers on a set of machines that are configured as worker nodes in a cluster.
- - However, it is does not deploy containers directly on the worker notes.
- - The containers are encapsulated into a kubernetes object known as pods.
+ 
+
+<table style="width:100%">
+  <tr>
+    <td> 
+        <ul>
+          <li>With Kubernetes our ultimate aim is to deploy our <b>applications</b> in the form of <b>containers</b> on a set of machines that are configured as <b>worker nodes</b> in a cluster</li>
+          <li>However, it is does not deploy containers directly on the worker nodes</li>
+          <li>The containers are <b>encapsulated</b> into a kubernetes object known as pods</li>
+        </ul> 
+    </td>
+    <td><img src="images/k8s_drawio_icons_02-Page-3.png" height="350px"></td>
+  </tr>
+</table>
+  
+---
 
 ## Pod 
  - Pod is the smallest deployable unit
