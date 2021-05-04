@@ -12,6 +12,7 @@ class: center, middle
  - `Namespace`  -> **logically divide** the cluster in multiple virtual clusters
 <br>  
 <br>  
+
 ![img_width_90](images/k8s_drawio_icons_02.png)
 
 
