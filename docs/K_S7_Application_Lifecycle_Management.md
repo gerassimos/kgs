@@ -1,5 +1,5 @@
 class: center, middle
-# Section 6 
+# Section 7 
 ## Application Lifecycle Management
 ---
 
@@ -113,6 +113,43 @@ spec:
 ```
  - The `command` field is used to override the `ENTRYPOINT` of the Docker image
  - The `args` field is used to override the `CMD` of the Docker image 
+ - Ref: [Define a Command and Arguments for a Container](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/)
+---
+
+## Inject Data Into Applications
+ - There are 3 main ways to inject *Configuration Data* into an application
+   1. Use **environment** variables
+   2. Use command line **arguments** 
+   3. Use configuration **files** (.yaml or .properties)  
+
+> The most common way is inject data via environment variables  
 
 ---
- 
+
+## POD environment variable
+<table>
+  <tr>
+    <td> 
+      <ul>
+        <li>To set an environment variable we use the <code class="remark-inline-code">env</code> property</li>
+        <li>The <code class="remark-inline-code">env</code> value is an <b>array</b> of dictionaries</li>
+        <li>Each element of the array has a <code class="remark-inline-code">name</code> and a <code class="remark-inline-code">value</code> property</li>
+        <li>The <code class="remark-inline-code">name</code> is name of the environment variable made available in the **container**</li>
+      </ul> 
+    </td>
+    <td><img src="images/K_pod-simple-webapp-color-env_c.png"></td>
+  </tr>
+</table>
+
+---
+
+## POD environment variable from ConfigMap/Secret 
+ - There are other ways of setting the environment variables in containers 
+ - We can use `ConfigMap` or `Secret` Kubernetes object
+
+<p style="text-align: center;">
+  <img src="images/k8s_drawio_icons_02-Page-7.png" alt="img_width_70">
+</p>
+
+---
+
