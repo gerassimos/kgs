@@ -30,8 +30,11 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
    - NodePort Service
    - LoadBalancer Service
  - Inject Data Into Applications
- - Storage
- - Observability: Logging|Monitoring|Tracing
+   - Define a Command and Arguments for a Container
+   - Define an environment variable for a container
+   - ConfigMap
+   - Secrets
  - Choosing the Right Container Infrastructure
+
  
  
