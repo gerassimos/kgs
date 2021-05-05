@@ -1,6 +1,6 @@
 class: center, middle
 # Section 7 
-## Application Lifecycle Management
+## Inject Data Into Applications
 ---
 
 ## CMD in Docker (1)
@@ -144,9 +144,9 @@ spec:
 ---
 ## POD environment variable from ConfigMap/Secret 
  - There are other ways of setting the environment variables in containers 
- - We can use `ConfigMap` or `Secret` Kubernetes object
+ - We can use `ConfigMap` or `Secret` Kubernetes object  
    ![k8s_drawio_icons_02-Page-7.png](images/k8s_drawio_icons_02-Page-7.png) ![K_env-configmap-secret_b](images/K_env-configmap-secret_b.png)
 
 ---
 ## ConfigMap
-
+ - 

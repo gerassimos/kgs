@@ -29,7 +29,7 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
    - ClusterIP Service
    - NodePort Service
    - LoadBalancer Service
- - Application Lifecycle Management
+ - Inject Data Into Applications
  - Storage
  - Observability: Logging|Monitoring|Tracing
  - Choosing the Right Container Infrastructure
