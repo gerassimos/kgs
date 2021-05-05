@@ -130,15 +130,6 @@ docker run --entrypoint sleep2.0 ubuntu-sleeper 10
 > In this example we used an imaginary `sleep2.0` command 
 
 ---
-
-## POD command & args
- - In the following example is a POD definition file for which we override both the `ENTRYPOINT` and the `CMD` of the docker image *ubuntu-sleeper*  
-![K_pod_ubuntu-sleeper.png](images/K_pod_ubuntu-sleeper_b.png)
- - The `command` field is used to override the `ENTRYPOINT` of the Docker image
- - The `args` field is used to override the `CMD` of the Docker image 
- - Ref: [Define a Command and Arguments for a Container](https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/)  
-
----
 ## POD command & args
  - In the following example is a POD definition file for which we override both the `ENTRYPOINT` and the `CMD` of the docker image *ubuntu-sleeper*  
 
