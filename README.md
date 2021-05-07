@@ -34,7 +34,27 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
    - Define an environment variable for a container
    - ConfigMap
    - Secrets
- - Choosing the Right Container Infrastructure
+ - Choosing the Right Container Infrastructure  
+
+--- 
+## Course Slides:
+ - [Slides](https://gerassimos.github.io/kgs/index.html)
+
+---
+## Course Exercises and Hands-on Labs:
+ - [Exercises and Hands-on Labs](https://github.com/gerassimos/kgs/tree/main/exercises)
+
+---
+## Prerequisites:
+- No paid software required
+- Linux basics such as shell terminal, text editing from the command (vim, nano)
+- Understand the basics of web and database servers (how they typically communicate, IP's, ports etc.)
+- Have a GitHub and Katacoda account
+
+---
+
+ - If you found this repository to be helpful, you can say "like" by clicking the "Star" button. Thanks :)
+![](docs/images/GithubClickStart.png) 
 
  
  
