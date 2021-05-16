@@ -5,7 +5,7 @@
  - Section 2 
    - [Kubernetes architecture](web_K_S2_Kubernetes_architecture.html)
  - Section 3
-   - [Basic_Deployment_objects](web_K_S3_Basic_Deployment_objects.html) 
+   - [Basic Deployment objects](web_K_S3_Basic_Deployment_objects.html) 
  - Section 4
    - [First kubectl commands](web_K_S4_First_kubectl_commands.html)
  - Section 5
@@ -22,7 +22,14 @@
 ## Exercises - LAB 
  - Section 2 
    - [Kubernetes architecture](https://github.com/gerassimos/kgs/blob/main/exercises/K_S2_Kubernetes_architecture_ex.md)
-
+ - Section 3
+   - [Basic Deployment objects](https://github.com/gerassimos/kgs/blob/main/exercises/K_S3_Basic_Deployment_objects_ex.md) 
+ - Section 4
+   - [First kubectl commands](https://github.com/gerassimos/kgs/blob/main/exercises/K_S4_First_kubectl_commands_ex.md) 
+ - Section 5
+   - [Kubernetes object definition file - yaml](https://github.com/gerassimos/kgs/blob/main/exercises/K_S5_Kubernetes_object_definition_file-yaml_ex.md) 
+ - Section 6
+   - [Kubernetes Services](https://github.com/gerassimos/kgs/blob/main/exercises/K_S6_Kubernetes_Services_ex.md) 
 
 ---
 
