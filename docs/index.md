@@ -37,3 +37,4 @@
  - GitHub repository [kgs](https://github.com/gerassimos/kgs)
    1. [Code samples and other resources](https://github.com/gerassimos/kgs/tree/main/resources)
    1. [Exercises and Hands-on Labs](https://github.com/gerassimos/kgs/tree/main/exercises)
+   1. [katacoda - Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground)

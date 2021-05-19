@@ -12,7 +12,7 @@
 ## Quiz Solution
 
 ### Question 1
- - Which are the main Kubernetes deployment objects?
+ - ➡️ Which are the main Kubernetes deployment objects?
 
 <details>
   <summary>answer</summary>
@@ -26,7 +26,7 @@
 
  
 ### Question 2
- - What is a kubernetes `namespace` and how can be used (describe use case examples)?  
+ - ➡️ What is a kubernetes `namespace` and how can be used (describe use case examples)?  
  - It is used to logically divide the cluster in multiple virtual clusters
  - Example: we can have namespace for the `prod` environment and one for the `test` environment
  - Example: we can have a namespace to separate independent application stacks
