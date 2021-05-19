@@ -1,12 +1,15 @@
-# Section 4 - First kubectl commands
+class: center, middle
+# Section 4  
+## First kubectl commands  
+
 ---
 ## Common commands (pods)
- - ### `kubectl run` - create a pod
- - ### `kubectl get` - list resources.
- - ### `kubectl describe` - show detailed information about a resource.
- - ### `kubectl logs` - print the logs from a container in a pod.
- - ### `kubectl exec` - execute a command on a container in a pod.
- - ### `kubectl delete` - delete a resource.
+ - `kubectl run` - create a pod
+ - `kubectl get` - list resources.
+ - `kubectl describe` - show detailed information about a resource.
+ - `kubectl logs` - print the logs from a container in a pod.
+ - `kubectl exec` - execute a command on a container in a pod.
+ - `kubectl delete` - delete a resource.
 [reference](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
 ---
@@ -127,29 +130,32 @@ NGINX_VERSION=1.19.9
 ---
 
 ## kubectl delete - delete a resource
-### `kubectl delete <resource-type> nginx`
+ - `kubectl delete <resource-type> nginx`
 ```console
 # kubectl delete pod nginx
 pod "nginx" deleted
 ```
 
+---
+
 ## Common commands (deployment)
- - ### `kubectl create deployment`  
- - ### `kubectl get all` - list all resources in the current (default) namespace
- - ### `kubectl scale deployment` - Scaling a Deployment 
- - ### `kubectl delete deployment nginx-deploy` 
+ - `kubectl create deployment`  
+ - `kubectl get all` - list all resources in the current (default) namespace
+ - `kubectl scale deployment` - Scaling a Deployment 
+ - `kubectl delete deployment nginx-deploy` 
 
 ---
 
 ## kubectl create deployment
-### `kubectl create deployment <deployment-name> --image=<docker-image>`
+ - `kubectl create deployment <deployment-name> --image=<docker-image>`
 ```console
 # kubectl create deployment nginx-deploy --image=nginx
 deployment.apps/nginx-deploy created
 ```
+
 ---
-## `kubectl get all` - list all resources in a namespace
-### `$ kubectl get all --namespace=<namespace-name>`
+## List all resources in a namespace
+ - `$ kubectl get all --namespace=<namespace-name>`
 
 ```console
 $ kubectl get all
@@ -174,7 +180,8 @@ replicaset.apps/nginx-deploy-d4789f999   1         1         1       3m26s
 ---
 
 ## Delete the pod that is part of Deployment (self-healing)
- - If we try to Delete a Pod which is part of Deployment then a new Pod is created (**self-healing**).
+ - If we try to Delete a Pod which is part of Deployment then a new Pod is created (**self-healing**).  
+
 ```console
 # kubectl delete pod nginx-deploy-d4789f999-vgmw4
 pod "nginx-deploy-d4789f999-vgmw4" deleted
@@ -192,34 +199,33 @@ deployment.apps/nginx-deploy   1/1     1            1           53m
 NAME                                     DESIRED   CURRENT   READY   AGE
 replicaset.apps/nginx-deploy-d4789f999   1         1         1       53m
 ```
+
 ---
 
-## Scaling a Deployment
-### `kubectl scale  deployment <deployment-name> --replicas=<number-of-replicas>`
-
+## Scaling a Deployment (1)
+ - `kubectl scale  deployment <deployment-name> --replicas=<number-of-replicas>`
+---
+## Scaling a Deployment (2)
+ - Use deployment
 ```console
 # kubectl scale  deployment nginx-deploy --replicas=2
 deployment.apps/nginx-deploy scaled
 ```
-
  - Use deploy instead of deployment
 ```console
-# kubectl scale  deployment nginx-deploy --replicas=2
+# kubectl scale  deploy nginx-deploy --replicas=2
 deployment.apps/nginx-deploy scaled
 ```
-
  - Use "/" instead of a space
 ```console
 # kubectl scale deploy/nginx-deploy --replicas=3
 deployment.apps/nginx-deploy scaled
 ```
-
-> Notes:
-> There are multiple ways to execute the same command.
-> There are multiple ways to create objects and perform any kind of administrative action on kubernetes 
-
+---
+## Scaling a Deployment (3)
+ - There are **multiple ways** to execute the same command.
+ - There are **multiple ways** to create objects and perform any kind of administrative action on kubernetes
  - Resource types and their abbreviated aliases - [Resource Types](https://kubernetes.io/docs/reference/kubectl/overview/#resource-types)
-
 ---
 
 ## Deployment logs 
@@ -234,8 +240,9 @@ Found 3 pods, using pod/nginx-deploy-d4789f999-x6vxb
 > This will only display logs from one pod 
 
 ---
-## Deployment logs - label selector
+## Deployment logs - label selector (1)
  - Use the `kubectl get pod --show-labels` command to display pod labels
+
 ```console
 $ kubectl get pod --show-labels
 NAME                           READY   STATUS    RESTARTS   AGE     LABELS
@@ -243,6 +250,10 @@ nginx-deploy-d4789f999-jwq4v   1/1     Running   0          8m22s   app=nginx-de
 nginx-deploy-d4789f999-jzkfp   1/1     Running   0          21m     app=nginx-deploy
 nginx-deploy-d4789f999-x6vxb   1/1     Running   0          24m     app=nginx-deploy
 ```
+
+---
+## Deployment logs - label selector (2)
+
  - Use the `kubectl logs -l app=nginx-deploy` command to display logs from all Pods that are part of the Deployment 
  - This command is using the **label selector** `-l app=nginx-deploy` to filter the set of pods and apply the logs command 
 ```console
@@ -267,7 +278,7 @@ $ kubectl logs -l app=nginx-deploy
 deployment.apps "nginx-deploy" deleted
 ```
  - Display the available resources in the *default* namespaces:
-```
+```console
 # kubectl get all
 NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   53m
@@ -276,19 +287,9 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   53m
 ---
 
 ## Create a pod with yml file - pod.yml
- - Following is the content of the `pod.yml` file used for this example
-```yml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pod-nginx
-spec:
-  containers:
-  - image: nginx
-    name: container-nginx
-```
-
-> Note:  
+ - Following is the content of the [pod.yml](https://github.com/gerassimos/kgs/blob/main/resources/lectures/pod.yml) file used for this example  
+   ![K_pod_simple_01](images/K_pod_simple_01.png)
+   
 > Both `.yml` and `.yaml` are valid extensions for the file
 ---
 
@@ -338,11 +339,15 @@ pod-nginx   1/1     Running   0          18s
 
 ---
 
-## kubernetes Imperative vs Declarative
+## kubernetes Imperative vs Declarative (1)
  - There are two basic ways to deploy to Kubernetes: 
- - **imperatively**: by using commands such as `kubectl run` or `kubectl create` etc..
- - **declaratively**: by writing the manifest yaml files and using `kubectl apply`. 
-
+ 1. **imperatively**: by using commands such as  
+   - `kubectl run` or `kubectl create` etc..
+ 1. **declaratively**: by writing the manifest yaml files and using 
+   - `kubectl apply -f app.yaml`.  
+  
+---
+## kubernetes Imperative vs Declarative (2)
 ### With the `declarative` way 
  - if an object **does not exist** then is created
  - if an object **does exist** then is updated or remains unchanged
