@@ -73,7 +73,7 @@ Ref: [wiki](https://en.wikipedia.org/wiki/List_of_cluster_management_software)
 ---
 
 ## Container Orchestrator (1b)
-![img_width_100](images/K_S0_Orchestration_3_nodes_x_red.jpg)
+![img_width_100](images/K_S0_Orchestration_3_nodes_x_red_b.jpg)
 
 ---
 ## Container Orchestrator (2)    
