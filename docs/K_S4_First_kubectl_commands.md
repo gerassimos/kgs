@@ -16,13 +16,13 @@ class: center, middle
 
 ## kubectl run - create a pod
 
-### `kubectl run <pod-name> --image=<docker-image>`
-
+ - `kubectl run <pod-name> --image=<docker-image>`
 ```console
 # kubectl run nginx --image=nginx
 pod/nginx created
 ```
-### `kubectl get <resource-type>`
+
+ - `kubectl get <resource-type>`
 ```console
 # kubectl get pods
 NAME    READY   STATUS    RESTARTS   AGE
@@ -30,8 +30,9 @@ nginx   1/1     Running   0          6m42s
 ```
 ---
 
-## kubectl describe - show detailed information
-### `kubectl describe <resource-type> <resource-name>`
+## kubectl describe - show detailed information  
+ - `kubectl describe <resource-type> <resource-name>`
+
 ```console
 # kubectl describe pod nginx
 Name:         nginx
@@ -49,31 +50,26 @@ Containers:
   nginx:
     Container ID:   docker://9a3f5f0fa4331838c93390a75413c0ad140138a0a7b9f047920e68a197f0ef51
     Image:          nginx
-    Image ID:       docker-pullable://nginx@sha256:6b5f5eec0ac03442f3b186d552ce895dce2a54be6cb834358040404a242fd476
-    Port:           <none>
-    Host Port:      <none>
+...
     State:          Running
-      Started:      Sat, 10 Apr 2021 16:35:18 +0000
-    Ready:          True
-    Restart Count:  0
-    Environment:    <none>
-    Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from default-token-j5czv (ro)
-Conditions:
-  Type              Status
-  Initialized       True 
-  Ready             True 
-  ContainersReady   True 
-  PodScheduled      True 
+...
+```
+> Note
+> See info about Namespace, Node, **Labels** etc..
+
+---
+## kubectl describe - show detailed information (1)
+```console
+# kubectl describe pod nginx
+Name:         nginx
+...
+Containers:
+  nginx:
+    Container ID:   docker://9a3f5f0fa4331838c93390a75413c0ad140138a0a7b9f047920e68a197f0ef51
+    
+... 
 Volumes:
-  default-token-j5czv:
-    Type:        Secret (a volume populated by a Secret)
-    SecretName:  default-token-j5czv
-    Optional:    false
-QoS Class:       BestEffort
-Node-Selectors:  <none>
-Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
-                 node.kubernetes.io/unreachable:NoExecute for 300s
+...
 Events:
   Type    Reason     Age   From               Message
   ----    ------     ----  ----               -------
@@ -82,10 +78,8 @@ Events:
   Normal  Pulled     10m   kubelet, node01    Successfully pulled image "nginx"
   Normal  Created    10m   kubelet, node01    Created container nginx
   Normal  Started    10m   kubelet, node01    Started container nginx
-  
 ```
-> Note
-> See info about Namespace, Node, **Labels** etc..
+
 ---
 
 ## kubectl logs - display logs
@@ -135,6 +129,11 @@ NGINX_VERSION=1.19.9
 # kubectl delete pod nginx
 pod "nginx" deleted
 ```
+
+---
+class: center, middle
+# Section 4  
+## First kubectl commands - deployment
 
 ---
 
@@ -285,6 +284,12 @@ service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   53m
 ```
 
 ---
+class: center, middle
+# Section 4  
+## First kubectl commands - yml  
+
+---
+
 
 ## Create a pod with yml file - pod.yml
  - Following is the content of the [pod.yml](https://github.com/gerassimos/kgs/blob/main/resources/lectures/pod.yml) file used for this example  
