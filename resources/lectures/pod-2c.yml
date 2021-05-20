@@ -2,11 +2,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: pod-nginx
-  labels:
-    app: my-app
-    env: production
-    tier: frontend
 spec:
   containers:
   - name: container-nginx
     image: nginx
+  - name: log-shipper
+    image: alpine

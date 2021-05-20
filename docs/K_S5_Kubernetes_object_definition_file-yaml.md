@@ -46,21 +46,24 @@ class: center, middle
 ---
 
 ## Pod definition file - Multi-container Pod
-```yml
-...
-spec:
-  containers:
-  - name: nginx-container
-    image: nginx
-  - name: log-shipper
-    image: alpine
+
+ - In this case the **containers** value is an array with 2 items related to to different containers (nginx-container and log-shipper)
+ - This example of a multi-container pod is known as the **sidecar** pattern  
+ ![K_pod-2c](images/K_pod-2c.png)  
+  
+---
+## Create Kubernetes object with kubectl apply -f
+ - Use the `pod.yml` file to create the `pod` with the **declarative** approach
+### `kubectl apply -f pod.yml` 
+```console
+# kubectl apply -f https://raw.githubusercontent.com/gerassimos/kgs/main/resources/lectures/pod.yml
+pod/nginx-pod created 
+
+git clone https://github.com/gerassimos/kgs.git
+cd kgs/resources/lectures/
+kubectl apply -f pod.yml
 ```
-> In this case the **containers** value is an array with 2 items related to to different containers (nginx-container and log-shipper)
-> This example of a multi-container pod is known as the **sidecar** pattern 
-
-### To create the pod execute:  
-### `kubectl apply -f pod.yml`  
-
+---
 
 ## ReplicaSet definition file (1)
  - The following is an example of a `rs.yml` definition file
