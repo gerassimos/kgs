@@ -207,12 +207,12 @@ replicaset.apps/nginx-deploy-d4789f999   1         1         1       53m
 ## Scaling a Deployment (2)
  - Use deployment
 ```console
-# kubectl scale  deployment nginx-deploy --replicas=2
+# kubectl scale  deployment nginx-deploy --replicas=3
 deployment.apps/nginx-deploy scaled
 ```
  - Use deploy instead of deployment
 ```console
-# kubectl scale  deploy nginx-deploy --replicas=2
+# kubectl scale  deploy nginx-deploy --replicas=3
 deployment.apps/nginx-deploy scaled
 ```
  - Use "/" instead of a space
@@ -226,12 +226,33 @@ deployment.apps/nginx-deploy scaled
  - There are **multiple ways** to create objects and perform any kind of administrative action on kubernetes
  - Resource types and their abbreviated aliases - [Resource Types](https://kubernetes.io/docs/reference/kubectl/overview/#resource-types)
 ---
+## Scaling a Deployment (4)
+ - After the scale => List all resources in a namespace
+
+```console
+# kubectl get all
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/nginx-deploy-d4789f999-t7r2c   1/1     Running   0          31s
+pod/nginx-deploy-d4789f999-dzc97   1/1     Running   0          17s
+pod/nginx-deploy-d4789f999-bsc13   1/1     Running   0          17s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3m57s
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nginx-deploy   3/3     3            3           36s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-deploy-d4789f999   3         3         3       31s
+```
+
+---
 
 ## Deployment logs 
  - To see the deployment logs:
 ```console
 # kubectl logs deployment/nginx-deploy
-Found 3 pods, using pod/nginx-deploy-d4789f999-x6vxb
+Found 3 pods, using pod/nginx-deploy-d4789f999-t7r2c
 /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
 /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
 ``` 
@@ -245,8 +266,8 @@ Found 3 pods, using pod/nginx-deploy-d4789f999-x6vxb
 ```console
 $ kubectl get pod --show-labels
 NAME                           READY   STATUS    RESTARTS   AGE     LABELS
-nginx-deploy-d4789f999-jwq4v   1/1     Running   0          8m22s   app=nginx-deploy
-nginx-deploy-d4789f999-jzkfp   1/1     Running   0          21m     app=nginx-deploy
+nginx-deploy-d4789f999-t7r2c   1/1     Running   0          8m22s   app=nginx-deploy
+nginx-deploy-d4789f999-dzc97   1/1     Running   0          21m     app=nginx-deploy
 nginx-deploy-d4789f999-x6vxb   1/1     Running   0          24m     app=nginx-deploy
 ```
 

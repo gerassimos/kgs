@@ -2,70 +2,46 @@ class: center, middle
 # Section 5 
 ## Kubernetes object definition file - yaml
 ---
-## The yaml file of a Kubernetes object
- - The yaml file of a Kubernetes object always contains the following fields (sections)
- - Both the `.yaml` and `.yml` are valid extensions for a Kubernetes definition file
-```yml
-apiVersion:  
-kind:  
-metadata:  
-spec:  
-```
+## The yaml file of a Kubernetes object (1)
+ - The yaml file of a Kubernetes object always contains the following fields (sections)  
+ ![kubernetes_yml_base_fields](images/kubernetes_yml_base_fields.png)
+---
+## The yaml file of a Kubernetes object (2)
  - **apiVersion** = The version of the Kubernetes API used to create this object
  - **kind** = What kind of object to create (Pod, ReplicaSet, Deployment etc.)
  - **metadata** = Data that helps uniquely identify the object, including a `name` string, `labels` and optional `namespace`
  - **spec** - The state/configuration of the object, (each object type has its own specification)
 ---
-## TODO
+## The yaml file of a Kubernetes object (3)
+ - The following table contains the **apiVersion**(s) of common deployment objects  
+ ![img_width_80](images/K_apiVersion_common_deployment_objects.png)
 
-|kind         |apiVersion  |
-|-------------|------------|
-|Pod          |v1          |
-|Service      |v1          |
-|ReplicaSet   |apps/v1     |
-|Deployment   |apps/v1     |
 
 ---
 
-## Pod definition file (1) 
- - The following is an example of a `pod.yml` definition file
-```yml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nginx-pod
-  labels: 
-    app: my-app
-    env: production
-    tier: frontend
-spec:
-  containers:
-  - name: nginx-container
-    image: nginx
-```
-> The value of the `apiVersion` is a **string** 
-> The value of the `kind` is a **string** 
-> The value of the `metadata` is a **dictionary** - (`name` and `labels` are siblings)
-> Note that the number of spaces used for the indentation is very important, we must be consistent.
-> In this example  `name` and `labels` are indented with 2 spaces
-> The value of the `labels` is a ***dictionary** - (*dictionary* within a *dictionary*)
+## Pod definition file (1a)  
+ - The following is an example of a `pod.yml` definition file  
+ ![K_pod-3l](images/K_pod-3l.png)  
+
+---
+ 
+## Pod definition file (1b)
+ - The value of the `apiVersion` is a **string** 
+ - The value of the `kind` is a **string** 
+ - The value of the `metadata` is a **dictionary** - (`name` and `labels` are siblings)
+ - Note that the number of spaces used for the indentation is very important, we must be consistent.
+ - In this example  `name` and `labels` are indented with 2 spaces
+ - The value of the `labels` is a ***dictionary** - (*dictionary* within a *dictionary*)
 
 ---
 
 ## Pod definition file (2) - containers section
- 
-```yml
-...
-spec:
-  containers:
-  - name: nginx-container
-    image: nginx
-```
-> The value of the `spec` is a **dictionary** 
-> The value of the `containers` is an **array**. The reason this property is an array is because a pod can have multiple containers.  
-> In this case there is only one item in the array.  
-> The item in the array is a dictionary with a **name** and **image** properties
-> The **-** right before the **name** indicates that this is the first item in the list.
+ - The value of the `spec` is a **dictionary** 
+ - The value of the `containers` is an **array**. The reason this property is an array is because a pod can have multiple containers.  
+ - In this case there is only one item in the array.  
+ - The item in the array is a dictionary with a `name` and `image` properties
+ - The `-` right before the `name` indicates that this is the first item in the list.  
+  ![K_pod-3l](images/K_pod-3lc1.png)
   
 ---
 
