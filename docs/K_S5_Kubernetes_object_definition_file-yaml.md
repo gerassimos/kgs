@@ -20,7 +20,7 @@ class: center, middle
 ---
 
 ## Pod definition file (1a)  
- - The following is an example of a `pod.yml` definition file  
+ - The following is an example of a `pod.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/pod-3l.yml) definition file  
  ![K_pod-3l](images/K_pod-3l.png)  
 
 ---
@@ -48,69 +48,76 @@ class: center, middle
 ## Pod definition file - Multi-container Pod
 
  - In this case the **containers** value is an array with 2 items related to to different containers (nginx-container and log-shipper)
- - This example of a multi-container pod is known as the **sidecar** pattern  
+ - This example of a multi-container pod is known as the **sidecar** pattern
+ - Example `pod.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/pod-2c.yml)  
  ![K_pod-2c](images/K_pod-2c.png)  
   
 ---
 ## Create Kubernetes object with kubectl apply -f
  - Use the `pod.yml` file to create the `pod` with the **declarative** approach
-### `kubectl apply -f pod.yml` 
+ - `kubectl apply -f pod.yml`
+ 
 ```console
 # kubectl apply -f https://raw.githubusercontent.com/gerassimos/kgs/main/resources/lectures/pod.yml
-pod/nginx-pod created 
+pod/pod-nginx created 
+
+or
 
 git clone https://github.com/gerassimos/kgs.git
 cd kgs/resources/lectures/
 kubectl apply -f pod.yml
+pod/pod-nginx created
 ```
+
+> Note that we can use directly a remote yml file located on a web server (GitHub)
 ---
 
 ## ReplicaSet definition file (1)
- - The following is an example of a `rs.yml` definition file
- - As with any Kubernetes yaml definition file there are 4 sections 
- 
-```yaml  
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: nginx-rs
-spec:
-  replicas:
-  selector:
-  template:
-```
-> The spec section:   
-> **replicas** = The the number of desired replicas. Remember a ReplicaSet creates multiple instances of a **Pod**  
-> **selector** = Used as a glue to determine which Pod are managed from the ReplicaSet  
-> **template** = Used for the Pod definition 
+ - The following is an example of a `ReplicaSet.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/rs.yml) definition file
+ - As with any Kubernetes yaml definition file there are 4 sections  
+ ![K_rs-empty](images/K_rs-empty.png) 
+
+> - `replicas` = The the number of desired replicas. Remember a ReplicaSet creates multiple instances of a **Pod**  
+> - `selector` = Used as a glue to determine which Pod are managed from the ReplicaSet  
+> - `template` = Used for the Pod definition 
 
 ---
 
 ## ReplicaSet definition file (2)
+ - `template` = Used for the Pod definition
 ![img_width_100](images/pod-vs-rs.png)
 
 ---
 
 ## ReplicaSet definition file (3)
-
-> But why we need a **selector** since the **template** section already contains the Pod managed from the ReplicaSet?  
-> Because can also manage Pods (of the same type) that are not created part of the ReplicaSet,
-> Pods that were created before the ReplicaSet 
+<table>
+  <tr>
+    <td> 
+        <ul>
+          <li>But why we need a <code>selector</code> since the <code>template</code> section already contains the Pod managed from the ReplicaSet?</li>
+          <li>Because can also manage Pods (of the same type) that are not created part of the ReplicaSet,</li>
+          <li>Pods that were created before the ReplicaSet</li>
+        </ul> 
+    </td>
+    <td><img src="images/K_rs-selector.png"></td>
+  </tr>
+</table> 
 
 ---
 ## ReplicaSet definition file (4)
 
-### To create the `ReplicaSet` execute:  
-### `kubectl apply -f rs.yml`  
-### To list the existing ReplicaSet objects 
-### `kubectl get replicaset`  
- or
-### `kubectl get rs`  
+ - To **create** the `ReplicaSet` execute:  
+   - `kubectl apply -f ReplicaSet.yml`  
+<br> 
+<br>
+ - To **list** all the existing ReplicaSet objects on the default namespace
+   - `kubectl get replicaset`  
+   - `kubectl get rs`  
 
 ---
 
 ## Deployment definition file (1)
- - The following is an example of a `deployment.yml` definition file
+ - The following is an example of a `deployment.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/deployment.yml)definition file
  - As with any Kubernetes yaml definition file there are 4 sections  
 
 ```yml  
