@@ -117,21 +117,12 @@ pod/pod-nginx created
 ---
 
 ## Deployment definition file (1)
- - The following is an example of a `deployment.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/deployment.yml)definition file
+ - The following is an example of a `deployment.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/deployment.yml) definition file
  - As with any Kubernetes yaml definition file there are 4 sections  
+ ![K_deploy-empty](images/K_deploy-empty.png)
 
-```yml  
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deploy
-spec:
-  replicas:
-  selector:
-  template:
-```
 
->The contents of the deployment definition file are exactly similar to the ReplicaSet  definition file except for the kind that is **Deployment**
+>The contents of the deployment definition file are exactly similar to the ReplicaSet  definition file except for the `kind` that is `Deployment`
 
 ---
 
@@ -199,8 +190,13 @@ replicaset.apps/nginx-deploy-7d9b76dbf7   1         1         1       2m19s
 
 ---
 
-## Generate a Pod definition file (1)
+## Generate a Pod definition file (1a) - dry-run
  - To generate a `Pod` definition file:
+   - `kubectl run nginx --image=nginx --dry-run=client -o yaml`
+
+---
+
+## Generate a Pod definition file (1b) - dry-run
 ```console
 # kubectl run nginx --image=nginx --dry-run=client -o yaml
 apiVersion: v1
@@ -220,21 +216,37 @@ spec:
 status: {}
 ```
 > In the output of the commands there are properties, such as the `creationTimestamp: null`, that can be ignored or eventually removed from the final result
-> In this example the properties that can be removed are: `creationTimestamp: null, resources: {}, dnsPolicy: ClusterFirst, restartPolicy: Always, status: {}`  
+> In this example the properties that can be removed are: `creationTimestamp: null, resources: {}, dnsPolicy: ClusterFirst, restartPolicy: Always, status: {}`
+  
 ---
 
 ## Generate a Pod definition file (2)
  - Finally we can redirect the output to a file:
+
 ```console
 # kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yml
 # cat pod.yml
 apiVersion: v1
 kind: Pod
+metadata:
+  name: nginx
 ...
+
 ``` 
 ---
 ## Generate a Deployment definition file (2)
- - In similar way as above we can create a `Deployment` definition file
+ - In similar way as above we can create a `Deployment` definition file  
+   - `kubectl create deployment nginx --image=nginx \`  
+   `--dry-run=client -o yaml > deployment.yml`
+
+```console
+# kubectl create deployment nginx --image=nginx \
+  --dry-run=client -o yaml > deployment.yml
+```
+---
+
+## Generate a Deployment definition file (2)
+
 ```console
 # kubectl create deployment nginx --image=nginx --dry-run=client -o yaml > deployment.yml
 # cat deployment.yml
@@ -252,25 +264,48 @@ spec:
       app: nginx
   strategy: {}
   template:
-    metadata:
-      creationTimestamp: null
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - image: nginx
-        name: nginx
-        resources: {}
-status: {}
+...
 ```
 > Also in this output there are properties, such as the `creationTimestamp: null`, that can be ignored or eventually removed from the final result
 
 ---
 
 ## Extract the definition file of an existing object
-TODO
-`kubectl get pod <pod-name> -o yaml > pod-definition.yaml`
+ - We can extract the pod definition file of an existing pod 
+ - `kubectl get pod <pod-name> -o yaml > pod-definition.yaml`
+
+```console
+# kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+pod-nginx   1/1     Running   0          10s
+
+# kubectl get pod pod-nginx -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+...
+
+# kubectl get pod pod-nginx -o yaml > pod.yaml
+# cat pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+...
+```
+---
 
 ## Edit an existing Kubernetes object
-TODO
-`kubectl edit pod <pod-name>`
+ - We can edit the pod definition file of an existing pod
+ - `kubectl edit pod <pod-name>`
+
+```console
+# kubectl get pods
+NAME        READY   STATUS    RESTARTS   AGE
+pod-nginx   1/1     Running   0          10s
+
+# kubectl edit pod pod-nginx
+apiVersion: v1
+kind: Pod
+metadata:
+
+``` 
