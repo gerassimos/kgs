@@ -74,6 +74,10 @@ img[alt="img_width_80"] {
     width: 80%;
 }
 
+img[alt="img_width_70"] {
+    width: 70%;
+}
+
 img[alt="img_width_50"] {
     width: 50%;
 }
