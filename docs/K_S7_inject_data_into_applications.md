@@ -167,6 +167,3 @@ docker run --entrypoint sleep2.0 ubuntu-sleeper 10
  - We can use `ConfigMap` or `Secret` Kubernetes object  
    ![k8s_drawio_icons_02-Page-7.png](images/k8s_drawio_icons_02-Page-7.png) ![K_env-configmap-secret_b](images/K_env-configmap-secret_b.png)
 
----
-## ConfigMap
- - 

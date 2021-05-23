@@ -14,7 +14,7 @@
 ---
 
 ### Exercise 2 - Service NodePort
- - Use the `deployment-front-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `front-end` stack.
+ - Use the `deployment-front-end.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/deployment-front-end.yml) definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `front-end` stack.
  - Verify that the kubernetes objects of the `front-end` deployment are created successfully. How many PODs are created ?
  - Create a `service-front-end.yml` definition file of a NodePort Service with the following specifications:
    - type: NodePort
@@ -28,7 +28,7 @@
 ---
 
 ### Exercise 3 - Service ClusterIP
- - Use the `deployment-back-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `back-end` stack.
+ - Use the `deployment-back-end.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/deployment-back-end.yml) definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `back-end` stack.
  - Verify that the kubernetes objects of the `back-end` deployment are created successfully. 
  - Create a Service by using the `kubectl expose` command with the following specifications:
    - type: ClusterIP
@@ -78,7 +78,7 @@ Events:            <none>
 ---
 
 ### Exercise 2 - Service NodePort
- - Use the `deployment-front-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `front-end` stack.
+ - Use the `deployment-front-end.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/deployment-front-end.yml) definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `front-end` stack.
 ```console
 # git clone https://github.com/gerassimos/kgs.git
 Cloning into 'kgs'...
@@ -195,7 +195,7 @@ or
 ---
 
 ### Exercise 3 - Service ClusterIP
- - Use the `deployment-back-end.yml` definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `back-end` stack.
+ - Use the `deployment-back-end.yml` [ref](https://github.com/gerassimos/kgs/blob/main/resources/lectures/deployment-back-end.yml) definition file available in the `resources/lectures` directory to created the PODs of a web application related to the `back-end` stack.
 ```console
 # git clone https://github.com/gerassimos/kgs.git
 Cloning into 'kgs'...
