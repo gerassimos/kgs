@@ -36,5 +36,5 @@ C. Pod, ReplicaSet and Deployment ✔️
 ---
 Q: A kubernetes `namespace` is used to logically divide the cluster in multiple virtual clusters  
 
-A. True ✔️
-B. False
+A. True ✔️  
+B. False  
