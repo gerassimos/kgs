@@ -34,7 +34,8 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
    - Define an environment variable for a container
    - ConfigMap
    - Secrets
- - Choosing the Right Container Infrastructure  
+ - Choosing the Right Container Infrastructure 
+ - Helm Getting Started
 
 --- 
 ## Course Slides:
