@@ -16,6 +16,8 @@
    - [Inject data into applications](web_K_S7_inject_data_into_applications.html)  
  - Section 8 
    - [Right Container Infrastructure](web_K_S8_Right_Container_Infrastructure.html) 
+ - Section 9
+   - [Helm Getting Started](web_K_S9_Helm_Getting_Started.html)
 
 ---
 
