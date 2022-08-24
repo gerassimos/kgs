@@ -27,7 +27,7 @@ class: center, middle
 
 ---
 ## Chart template basic example
- - [helm-basic-example]() => minimal Helm application deployment  
+ - [helm-basic-example](https://github.com/gerassimos/kgs/tree/main/resources/helm-basic-example) => minimal Helm application deployment  
  - To develop if Helm Chart  => [Chart Template Guide](https://helm.sh/docs/chart_template_guide/getting_started/)
  - To set our development environment for this example  
    - Clone the `kgs` repository from github
@@ -39,7 +39,7 @@ cd kgs/resources/helm-basic-example
 ---
 ## Chart directory structure
 ```console
-$ helm-basic-example git:(main) ✗ tree .
+$ helm-basic-example: tree .
 .
 ├── Chart.yaml
 ├── templates
@@ -78,7 +78,7 @@ TEST SUITE: None
 ---
 ## View the deployed objects
  - Run the `kubectl get` commands to verify that the expected Kubernetes objects are actually deployed
-```
+```console
 $ kubectl get deployments
 NAME            READY   UP-TO-DATE   AVAILABLE   AGE
 nginx           0/1     0            0           5m54s
@@ -97,7 +97,8 @@ my-first-chart	default  	1       	2022-08-24 17:25:46.849402 +0300 EEST	deployed
 ---
 ## Uninstall a Release
  - To uninstall a release, use the `helm uninstall` command
-```
+
+```console
 helm uninstall my-first-chart
 release "my-first-chart" uninstalled
 
@@ -108,4 +109,3 @@ $ kubectl get svc
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 ```
  - In production cases a helm deployment will contain a bigger number of Kubernetes objects
----
