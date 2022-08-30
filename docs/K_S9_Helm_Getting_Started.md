@@ -21,8 +21,15 @@ class: center, middle
 
 ---
 ## Helm Installation
- - TODO
-
+ - Download the `helm` binary 
+ - Add `helm` binary to the PATH 
+```console
+cd /tmp/
+wget https://get.helm.sh/helm-v3.8.0-linux-amd64.tar.gz
+tar -zxvf helm-v3.8.0-linux-amd64.tar.gz
+mv linux-amd64/helm /usr/local/bin/helm
+```
+ - More info available [here](https://helm.sh/docs/intro/install/#from-the-binary-releases)
 ---
 ## Chart template basic example
  - Source code of this example available at: [helm-basic-example](https://github.com/gerassimos/kgs/tree/main/resources/helm-basic-example)
