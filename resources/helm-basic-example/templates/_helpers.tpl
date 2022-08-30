@@ -1,6 +1,6 @@
 
 {{/*
-Selector labels
+common labels
 */}}
 {{- define "helm-basic-example.commonLabels" -}}
 app.kubernetes.io/name: "helm-basic-example.name"

@@ -4,6 +4,7 @@ metadata:
   name: nginx
   labels:
     app: nginx
+{{ include "helm-basic-example.commonLabels" . | indent 4 }}
 spec:
   replicas: {{ .Values.deployment.replicaCount }}
   selector:

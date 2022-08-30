@@ -7,17 +7,15 @@ class: center, middle
  - What is Helm 
  - Helm Installation
  - Chart template basic example
- - Quickstart Guide
+ - Reference to other Helm Guides
  
 ---
 ## What is Helm
  - Helm is used to manage our Kubernetes Deployments
- - Deployments = All k8s objects (Pod, Services etc..) of an applications
- - Single command to deploy an Application
- - Single command to upgrade an Application
- - Single command to delete an Application
- - Client side tool (on top of kubectl)
- - "Package manager for Kubernetes"
+ - Deployments = All k8s objects (Pod, Services etc..) of an application
+ - Single command to deploy, upgrade and delete an Application
+ - Client side tool on top of kubectl
+ - Package manager for Kubernetes
  - Next tool to learn after Docker and Kubernetes
  - Helm via [ArgoCD](https://argo-cd.readthedocs.io/en/stable/)
 
@@ -27,8 +25,7 @@ class: center, middle
 
 ---
 ## Chart template basic example
- - [helm-basic-example](https://github.com/gerassimos/kgs/tree/main/resources/helm-basic-example) => minimal Helm application deployment  
- - To develop if Helm Chart  => [Chart Template Guide](https://helm.sh/docs/chart_template_guide/getting_started/)
+ - Source code of this example available at: [helm-basic-example](https://github.com/gerassimos/kgs/tree/main/resources/helm-basic-example)
  - To set our development environment for this example  
    - Clone the `kgs` repository from github
    - cd in to the `helm-basic-example` directory  
@@ -60,7 +57,41 @@ $ helm-basic-example: tree .
 {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
 ```
 ---
+## Chart Named Templates (1)
+ - In the `_helpers.tpl` we use the `define` to create the **helm-basic-example.commonLabels** named template 
+ - [using templates](https://helm.sh/docs/chart_template_guide/named_templates/#declaring-and-using-templates-with-define-and-template)
 
+```text
+{{/*
+common labels
+*/}}
+{{- define "helm-basic-example.commonLabels" -}}
+app.kubernetes.io/name: "helm-basic-example.name"
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+```
+---
+## Chart Named Templates (2)
+- We can think of this as a function that can be called with the `include` keyword as many times as we like
+- In this example we use it in the `deployment.yaml` and the `service.yaml` files
+```
+deployment.yaml
+...
+{{ include "helm-basic-example.commonLabels" . | indent 4 }}
+...
+```
+---
+## Render the Chart
+ - Render the Chart to see the actual Kubernetes object that will be deployed 
+
+```console
+helm install --dry-run my-first-chart . > template.yaml
+helm install --dry-run --disable-openapi-validation my-first-chart .
+helm template --release-name "my-first-chart" -f values.yaml . 
+```
+
+ - Note that the flag `disable-openapi-validation` will ignore some errors such as a label with no value 
+---
 ## Deploying The Chart
  - To install a chart, we can run the `helm install` command
 ```console
@@ -74,6 +105,7 @@ TEST SUITE: None
 ```
  - Note that in the installation command we used `.` 
  - This is to specify the local directory where the chart's yaml files are located
+ - The `{{ .Release.Name }}` is set to  `my-first-chart`  
  - We can also upload the chart to a helm registry
 ---
 ## View the deployed objects
@@ -109,3 +141,7 @@ $ kubectl get svc
 NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
 ```
  - In production cases a helm deployment will contain a bigger number of Kubernetes objects
+---
+## Reference to other Helm Guides
+ - [Quickstart Guide](https://helm.sh/docs/intro/quickstart/)
+ - [Chart Template Guide](https://helm.sh/docs/chart_template_guide/getting_started/) 
