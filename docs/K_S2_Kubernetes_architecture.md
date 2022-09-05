@@ -111,7 +111,7 @@ gm-123   Ready    <none>                 53d   v1.20.2
 
 1. The **hard way** => all control plan components are running as **linux services**
 2. Via the **kubeadm** tool => all control plan components are running as "static" **PODs**
-3. Via a Cloud provider => All control plan components are manages from the cloud vendor. We have access only to the workers nodes We do not manage
+3. Via a Cloud provider => All control plan components are managed from the cloud vendor. We have access only to the workers nodes We do not manage
 ---
 ## kubernetes Installation options for Dev
  - Docker Desktop (Enable Kubernetes)
