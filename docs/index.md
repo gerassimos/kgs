@@ -18,6 +18,8 @@
    - [Right Container Infrastructure](web_K_S8_Right_Container_Infrastructure.html) 
  - Section 9
    - [Helm Getting Started](web_K_S9_Helm_Getting_Started.html)
+ - Section 10
+   - [Kubernetes Resource Requirements and Limits](web_K_S10_Resource_ReqLim.html) 
 
 ---
 
@@ -39,4 +41,4 @@
  - GitHub repository [kgs](https://github.com/gerassimos/kgs)
    1. [Code samples and other resources](https://github.com/gerassimos/kgs/tree/main/resources)
    1. [Exercises and Hands-on Labs](https://github.com/gerassimos/kgs/tree/main/exercises)
-   1. [katacoda - Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground)
+   1. [Killercoda - Kubernetes Playground](https://killercoda.com/playgrounds)
