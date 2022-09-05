@@ -50,7 +50,7 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
 - No paid software required
 - Linux basics such as shell terminal, text editing from the command (vim, nano)
 - Understand the basics of web and database servers (how they typically communicate, IP's, ports etc.)
-- Have a GitHub and Katacoda account
+- Have a GitHub and Killercoda account
 
 ---
 

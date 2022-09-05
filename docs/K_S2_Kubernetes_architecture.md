@@ -5,8 +5,6 @@ class: center, middle
 background-image: url(images/Kubernetes_20architecture_20diagram_b.png)
 background-size: 100% 100%
 ---
-![img_width_100_height_100](images/Kubernetes_20architecture_20diagram_b.png)
----
 ## Node types 
  - `Master Nodes` => run the **control plane** components
  - `Worker Nodes` => run **application workloads**
@@ -59,14 +57,6 @@ background-size: 100% 100%
 </p>
 
 ---
-## control plane components running as pods
- - There are 2 types of kubernetes deployments 
-   1. The **hard way** from scratch 
-   2. Via the **kubeadm** tool
-  
- 1. The **hard way** => all control plan components are running as **linux services** 
- 2. Via the **kubeadm** tool => all control plan components are running as "static" **PODs** 
----
 ## kubelet
  - Is a **linux service** running each node of the cluster
  - Listen for instructions from the **kube-apiserver**
@@ -113,14 +103,23 @@ gm-123   Ready    <none>                 53d   v1.20.2
   <img src="images/K_S1_k8s_CRI_CNI_CSI_b.jpg" alt="img_width_80">
 </p>
 ---
+## Kubernetes installation options  
+ - There are many types of kubernetes installation methods 
+   1. The **hard way** from scratch 
+   2. Via the **kubeadm** tool
+   3. Via a Cloud provider (AWS EKS etc.)
 
-## Installation options for Dev
+1. The **hard way** => all control plan components are running as **linux services**
+2. Via the **kubeadm** tool => all control plan components are running as "static" **PODs**
+3. Via a Cloud provider => All control plan components are manages from the cloud vendor. We have access only to the workers nodes We do not manage
+---
+## kubernetes Installation options for Dev
  - Docker Desktop (Enable Kubernetes)
  - Minikube (--driver=virtualbox)
  - MicroK8s (Canonical - Ubuntu)
  - K3S (Lightweight Kubernetes - Rancher)
  - Play with kubernetes (online web based)
- - Katacoda (online web based)
+ - killercoda (online web based)
 
 
 
