@@ -19,7 +19,7 @@
  - Section 9
    - [Helm Getting Started](web_K_S9_Helm_Getting_Started.html)
  - Section 10
-   - [Kubernetes Resource Requirements and Limits](web_K_S10_Resource_ReqLim.html) 
+   - [Kubernetes Resource Requests and Limits](web_K_S10_Resource_ReqLim.html) 
 
 ---
 

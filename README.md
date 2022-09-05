@@ -36,7 +36,7 @@ This course provides a walkthrough of the basics of the Kubernetes cluster orche
    - Secrets
  - Choosing the Right Container Infrastructure 
  - Helm Getting Started
- - Kubernetes Resource Requirements and Limits
+ - Kubernetes Resource Requests and Limits
 
 --- 
 ## Course Slides:
