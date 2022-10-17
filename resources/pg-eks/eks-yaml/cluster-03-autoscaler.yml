@@ -1,0 +1,39 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: "gm-eks-01"
+  region: "us-east-1"
+  version: "1.22" # This is the kubernetes version
+
+## Add all possible AZs to ensure nodes can be spun up in any AZ later on. 
+## THIS CAN'T BE CHANGED LATER. YOU WILL HAVE TO CREATE A NEW CLUSTER TO ADD NEW AZ SUPPORT.
+## This list applies to the whole cluster and isn't specific to nodegroups
+availabilityZones: ["us-east-1a", "us-east-1c"]
+
+nodeGroups:
+  - name: ng-3-autoscale-us-east1-a
+    instanceType: t2.small
+    desiredCapacity: 1
+    maxSize: 5
+    availabilityZones: ["us-east-1a"]
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+    labels:
+      nodegroup-type: stateful-us-east1-a
+      instance-type: onDemand
+      az: "us-east1-a"
+  - name: ng-4-autoscale-spot-multi-az
+    desiredCapacity: 1
+    maxSize: 5
+    instancesDistribution:
+      instanceTypes: ["t2.small", "t3.small"]
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 0
+    availabilityZones: ["us-east-1a", "us-east-1c"]
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+    labels:
+      nodegroup-type: stateless-workload
+      instance-type: spot

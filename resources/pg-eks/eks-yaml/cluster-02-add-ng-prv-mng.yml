@@ -1,0 +1,47 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: "gm-eks-01"
+  region: "us-east-1"
+  version: "1.22" # This is the kubernetes version
+
+## Add all possible AZs to ensure nodes can be spun up in any AZ later on. 
+## THIS CAN'T BE CHANGED LATER. YOU WILL HAVE TO CREATE A NEW CLUSTER TO ADD NEW AZ SUPPORT.
+## This list applies to the whole clustr and isn't specific to nodegroups
+availabilityZones: ["us-east-1a", "us-east-1c"]
+
+# eksctl cmd (privateNetworking)
+# eksctl create nodegroup --config-file=cluster-02-add-ng-prv-mng.yml --include=ng-3-private
+# eksctl scale nodegroup --cluster=gm-eks-01 --nodes=1 --name=ng-3-private
+nodeGroups:
+  - name: ng-3-private
+    instanceType: t2.medium
+    minSize: 0
+    maxSize: 5
+    privateNetworking: true
+
+
+managedNodeGroups:
+  # eksctl cmd
+  # eksctl create nodegroup --config-file=cluster-02-add-ng-prv-mng.yml --include=ng-3-mng
+  # eksctl scale nodegroup --cluster=gm-eks-01 --nodes=1 --name=ng-3-mng
+  # eksctl delete nodegroup --cluster=gm-eks-01 --name=ng-3-mng
+  - name: ng-3-mng
+    instanceType: t2.medium
+    minSize: 0
+    maxSize: 5
+    ssh: # use existing EC2 key
+      publicKeyName: aws-mitge-personal-eks-course
+
+# eksctl create nodegroup --config-file=cluster-02-add-ng-prv-mng.yml --include=ng-3-mng-auto
+# eksctl scale nodegroup --cluster=gm-eks-01 --nodes=2 --name=ng-3-mng-auto
+  - name: ng-3-mng-auto
+    instanceType: t2.medium
+    desiredCapacity: 1
+    minSize: 0
+    maxSize: 5
+    iam:
+      withAddonPolicies:
+        autoScaler: true
+    ssh: # use existing EC2 key
+      publicKeyName: aws-mitge-personal-eks-course

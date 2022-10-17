@@ -1,0 +1,25 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: "gm-eks-01"
+  region: "us-east-1"
+  version: "1.22" # This is the kubernetes version
+
+## Add all possible AZs to ensure nodes can be spun up in any AZ later on. 
+## THIS CAN'T BE CHANGED LATER. YOU WILL HAVE TO CREATE A NEW CLUSTER TO ADD NEW AZ SUPPORT.
+## This list applies to the whole clustr and isn't specific to nodegroups
+availabilityZones: ["us-east-1a", "us-east-1c"]
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t2.medium
+    desiredCapacity: 2
+    ssh: # use existing EC2 key
+      publicKeyName: aws-mitge-personal-eks-course
+  - name: ng-2-dynamic
+    instanceType: t2.medium
+    minSize: 0
+    maxSize: 5
+    ssh: # use existing EC2 key
+      publicKeyName: aws-mitge-personal-eks-course
+

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+#      nodeSelector:
+#        alpha.eksctl.io/nodegroup-name: ng-01
+      containers:
+      - image: nginx
+        name: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: LoadBalancer
+#  type: NodePort
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  
+

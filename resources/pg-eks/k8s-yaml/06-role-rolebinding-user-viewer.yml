@@ -1,0 +1,23 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: prod-viewer-role
+  namespace: production
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["*"]  # can be further limited, e.g. ["deployments", "replicasets", "pods"]
+  verbs: ["get", "list", "watch"] 
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: prod-viewer-binding
+  namespace: production
+subjects:
+- kind: User
+  name: k8s-cluster-viewer # This is IAM username
+  apiGroup: ""
+roleRef:
+  kind: Role
+  name: prod-viewer-role
+  apiGroup: ""
