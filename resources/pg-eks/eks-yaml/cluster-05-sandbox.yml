@@ -7,6 +7,11 @@ metadata:
 
 availabilityZones: ["eu-central-1a", "eu-central-1b", "eu-central-1c"]
 
+## https://eksctl.io/usage/cloudwatch-cluster-logging/#clusterconfig-examples
+cloudWatch:
+  clusterLogging:
+    enableTypes: ["api", "audit", "authenticator", "controllerManager" , "scheduler"]
+
 # eksctl scale nodegroup --cluster=kubeflow-test-01 --nodes=3 --name=ng-1-mng
 managedNodeGroups:
   - name: ng-1-mng
