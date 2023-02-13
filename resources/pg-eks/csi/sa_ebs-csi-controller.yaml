@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::536686139266:role/AmazonEKS_EBS_CSI_DriverRole_04
+  labels:
+    app.kubernetes.io/component: csi-driver
+    app.kubernetes.io/managed-by: EKS
+    app.kubernetes.io/name: aws-ebs-csi-driver
+    app.kubernetes.io/version: 1.15.0
+  name: ebs-csi-controller-sa
+  namespace: kube-system
+secrets:
+- name: ebs-csi-controller-sa-token-gf2gd
