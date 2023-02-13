@@ -38,9 +38,7 @@ eksctl utils write-kubeconfig --cluster=gm-eks-01 --kubeconfig=/tmp/config
 eksctl get nodegroup --cluster gm-eks-01
 eksctl create nodegroup --config-file=cluster-02-add-ng.yml  
 eksctl create nodegroup --config-file=cluster-02-add-ng.yml  --include=ng-2-dynamic
-eksctl delete nodegroup --config-file=cluster-02-add-ng.yml --include=ng-2-dynamic --approve
 eksctl delete nodegroup --cluster=gm-eks-01 --name=ng-1
-eksctl delete nodegroup --cluster=gm-eks-01 --name=ng-2-dynamic
 ```
 
 - [Scaling a nodegroup](https://eksctl.io/usage/managing-nodegroups/#scaling-a-single-nodegroup)
