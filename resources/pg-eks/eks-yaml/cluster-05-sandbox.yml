@@ -1,9 +1,9 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
-  name: "kubeflow-test-01"
+  name: "kubeflow-test-02"
   region: "eu-central-1"
-  version: "1.23" # This is the kubernetes version
+  version: "1.24" # This is the kubernetes version
 
 # eksctl create cluster -f cluster-05-sandbox.yml
 # eksctl delete cluster --name kubeflow-test-01 --region eu-central-1
@@ -14,10 +14,10 @@ cloudWatch:
   clusterLogging:
     enableTypes: ["api", "audit", "authenticator", "controllerManager" , "scheduler"]
 
-# eksctl scale nodegroup --cluster=kubeflow-test-01 --nodes=5 --name=ng-1-mng
+# eksctl scale nodegroup --cluster=kubeflow-test-02 --nodes=3 --name=ng-1-mng
 managedNodeGroups:
   - name: ng-1-mng
-    instanceType: t3.large
+    instanceType: r6i.large
     minSize: 1
     maxSize: 6
     ssh: # use existing EC2 key
@@ -25,14 +25,14 @@ managedNodeGroups:
 # eksctl create nodegroup --config-file=cluster-05-sandbox.yml --include=ng-2-gpu
 # eksctl scale nodegroup --cluster=kubeflow-test-01 --nodes=1 --name=ng-2-gpu
 # eksctl delete nodegroup --cluster=kubeflow-test-01 --name=ng-2-gpu
-  - name: ng-2-gpu
-#    ami: ami-0f5e2ce69f0cd641f
-    instanceType: p2.xlarge
-    minSize: 0
-    maxSize: 1
-    ssh: # use existing EC2 key
-      publicKeyName: gerassimos-mitropoulos
-    taints:
-      - key: nvidia.com/gpu
-        value: "true"
-        effect: NoSchedule
+#  - name: ng-2-gpu
+##    ami: ami-0f5e2ce69f0cd641f
+#    instanceType: p2.xlarge
+#    minSize: 0
+#    maxSize: 1
+#    ssh: # use existing EC2 key
+#      publicKeyName: gerassimos-mitropoulos
+#    taints:
+#      - key: nvidia.com/gpu
+#        value: "true"
+#        effect: NoSchedule

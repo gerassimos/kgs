@@ -46,3 +46,7 @@ eksctl delete nodegroup --cluster=gm-eks-01 --name=ng-1
 ```shell
 eksctl scale nodegroup --cluster=gm-eks-01 --nodes=1 --name=ng-2-dynamic
 ```
+
+
+## csi setup
+ - [csi-readly](csi/readme.md)
