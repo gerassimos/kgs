@@ -4,7 +4,7 @@ eksctl create cluster --name gm-eks-01 --region us-east-1
 eksctl create cluster --name gm-eks-02 --nodes=3 --version 1.22 --region us-east-1 --zones us-east-1a,us-east-1c
 eksctl create cluster -f cluster.yml
 eksctl get cluster
-eksctl delete cluster --name gm-eks-01 --region us-east-1
+eksctl delete cluster --name gm-eks-01
 ```
 
  - Notes:
