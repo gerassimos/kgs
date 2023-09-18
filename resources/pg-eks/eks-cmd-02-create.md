@@ -48,5 +48,48 @@ eksctl scale nodegroup --cluster=gm-eks-01 --nodes=1 --name=ng-2-dynamic
 ```
 
 
-## csi setup
+## csi setup (old not valid anymore)
  - [csi-readly](csi/readme.md)
+
+## csi setup (new)
+ - From EKS web console -> Addons -> add `Amazon EBS CSI Driver`  Version v1.22.0-eksbuild.2
+ - Add policy to worker node role
+ - Find the worker node role 
+```shell
+kubectl -n kube-system describe configmap aws-auth | grep role
+  rolearn: arn:aws:iam::536686139266:role/eksctl-kubeflow-test-03-nodegroup--NodeInstanceRole-qqI6B4b67Jse
+```
+- Add this policy to the role. 
+```json
+{
+ "Version": "2012-10-17",
+ "Statement": [{
+  "Sid": "VisualEditor0",
+  "Effect": "Allow",
+  "Action": [
+   "ec2:CreateVolume",
+   "ec2:DeleteVolume",
+   "ec2:DetachVolume",
+   "ec2:AttachVolume",
+   "ec2:DescribeInstances",
+   "ec2:CreateTags",
+   "ec2:DeleteTags",
+   "ec2:DescribeTags",
+   "ec2:DescribeVolumes"
+  ],
+  "Resource": "*"
+ }]
+}
+```
+ - In case of the sandbox account there already a policy `AmazonEKS_EBS_CSI_Driver_Policy` that can be used instead of the custom policy above.
+ - From the web console Add the policy to the worker node role
+ - [info](https://adil.medium.com/how-to-solve-kubernetes-ebs-csi-driver-unauthorizedoperation-error-d7d82c1e8eaa)
+  
+## Add IAM user to the cluster
+- List user and roles defined in the ConfigMap
+```shell
+eksctl get iamidentitymapping --cluster kubeflow-test-03 --region=eu-central-1
+eksctl create iamidentitymapping --cluster kubeflow-test-03 --region=eu-central-1 \
+    --arn <user-arn or role-arn> --username gerassimos_cli --group system:masters \
+    --no-duplicate-arns
+```
