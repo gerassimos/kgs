@@ -14,7 +14,7 @@ cloudWatch:
   clusterLogging:
     enableTypes: ["api", "audit", "authenticator", "controllerManager" , "scheduler"]
 
-# eksctl scale nodegroup --cluster=kubeflow-test-02 --nodes=3 --name=ng-1-mng
+# eksctl scale nodegroup --cluster=kubeflow-test-03 --nodes=3 --name=ng-1-mng
 managedNodeGroups:
   - name: ng-1-mng
     instanceType: r6i.large
